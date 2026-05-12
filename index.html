@@ -271,7 +271,7 @@
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
                     <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                        Plantas Registadas
+                        Plantas Registradas
                         <span id="itemsCountBadge" class="bg-slate-400 text-white px-2 py-0.5 rounded-full text-[10px]">0</span>
                     </h2>
                     <button type="button" onclick="clearAllFields(true)" class="text-[10px] font-bold text-red-500 hover:text-red-700 uppercase flex items-center gap-1 transition-colors">
@@ -581,6 +581,34 @@
 
         Chart.register(ChartDataLabels);
 
+        // Funções para salvar e carregar do Cache (Local Storage)
+        function saveRecords() {
+            try {
+                localStorage.setItem('spg_biometria_pepino', JSON.stringify(records));
+            } catch (e) {
+                console.warn("Limite de memória excedido. Salvando sem as fotos.");
+                try {
+                    const recordsWithoutPhotos = records.map(r => ({ ...r, photos: [] }));
+                    localStorage.setItem('spg_biometria_pepino', JSON.stringify(recordsWithoutPhotos));
+                } catch (e2) {
+                    console.error("Erro ao salvar cache", e2);
+                }
+            }
+        }
+
+        function loadRecords() {
+            const saved = localStorage.getItem('spg_biometria_pepino');
+            if (saved) {
+                try {
+                    records = JSON.parse(saved);
+                    updateItemsCount();
+                    renderRecordsList();
+                } catch (e) {
+                    console.error("Erro ao ler cache", e);
+                }
+            }
+        }
+
         function toggleView(view) {
             const formView = document.getElementById('view-form');
             const dashView = document.getElementById('view-dashboard');
@@ -634,6 +662,7 @@
             updateItemsCount();
             renderRecordsList();
             updatePreview();
+            saveRecords();
         }
 
         function updateItemsCount() {
@@ -675,7 +704,7 @@
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i data-lucide="save" class="w-5 h-5"></i> <span>Salvar Alterações</span>';
             btn.className = "w-full mt-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl text-sm transition-all shadow-lg flex justify-center items-center gap-2 uppercase tracking-widest active:scale-95";
-            document.getElementById('formTitle').innerHTML = '<i data-lucide="pencil" class="text-blue-600"></i> Editando Planta Registada';
+            document.getElementById('formTitle').innerHTML = '<i data-lucide="pencil" class="text-blue-600"></i> Editando Planta Registrada';
             document.getElementById('formContainer').classList.add('border-blue-300', 'ring-2', 'ring-blue-100');
             document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
             renderRecordsList(); updatePreview(); lucide.createIcons();
@@ -700,6 +729,7 @@
                 const t = new Date();
                 di.value = new Date(t.getTime() - (t.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
             }
+            loadRecords();
             updatePreview();
         });
 
@@ -731,7 +761,7 @@
                 if(n||fr||ab||mo) r.fruits.push({num:n, frutos:fr, abortos:ab, motivo:mo});
             }
             if (editingIndex >= 0) records[editingIndex] = r; else records.push(r);
-            updateItemsCount(); clearFormSilently(); renderRecordsList(); updatePreview();
+            updateItemsCount(); clearFormSilently(); renderRecordsList(); updatePreview(); saveRecords();
         }
 
         function clearFormSilently() {
@@ -1059,7 +1089,7 @@
         }
 
         function hideClearAllModal() { document.getElementById('clearAllModal').classList.add('hidden'); }
-        function executeClearAll() { hideClearAllModal(); records = []; updateItemsCount(); clearFormSilently(); renderRecordsList(); updatePreview(); }
+        function executeClearAll() { hideClearAllModal(); records = []; updateItemsCount(); clearFormSilently(); renderRecordsList(); updatePreview(); saveRecords(); }
         function clearAllFields(prompt) { if (prompt) document.getElementById('clearAllModal').classList.remove('hidden'); else executeClearAll(); }
     </script>
 </body>
