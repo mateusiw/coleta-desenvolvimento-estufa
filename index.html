@@ -457,7 +457,7 @@
                 </div>
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
                     <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
-                        <i data-lucide="apple" class="w-4 h-4 text-orange-500"></i> Média de Frutos e Abortos
+                        <i data-lucide="apple" class="w-4 h-4 text-orange-500"></i> Total de Frutos e Abortos
                     </h3>
                     <div class="relative h-64 w-full">
                         <canvas id="chartFrutos"></canvas>
@@ -981,8 +981,11 @@
                 const dh=stk.map(tk=>{const a=g[tk][ent]?.h; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
                 const dsc=stk.map(tk=>{const a=g[tk][ent]?.sc; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
                 const dlc=stk.map(tk=>{const a=g[tk][ent]?.lc; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
-                const df=stk.map(tk=>{const a=g[tk][ent]?.f; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
-                const da=stk.map(tk=>{const a=g[tk][ent]?.a; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                
+                // MUDANÇA: SOMA de frutos e abortos em vez de média
+                const df=stk.map(tk=>{const a=g[tk][ent]?.f; return a&&a.length?(a.reduce((a,b)=>a+b,0)).toFixed(0):null;});
+                const da=stk.map(tk=>{const a=g[tk][ent]?.a; return a&&a.length?(a.reduce((a,b)=>a+b,0)).toFixed(0):null;});
+
                 hds.push({label:ent==='Geral'?'Altura (cm)':ent, data:dh, borderColor:c.border, backgroundColor:cm==='SIMPLES'?c.bg:'transparent', borderWidth:3, fill:cm==='SIMPLES', tension:0.4});
                 sds.push({label:ent==='Geral'?'Haste (cm)':ent, data:dsc, borderColor:cm==='SIMPLES'?'#f59e0b':c.border, backgroundColor:cm==='SIMPLES'?'rgba(245,158,11,0.15)':'transparent', borderWidth:3, fill:cm==='SIMPLES', tension:0.4});
                 if(cm==='SIMPLES'){
@@ -1007,8 +1010,10 @@
                     const lG=ga(lD.lc)-ga(fD.lc), hG=ga(lD.h)-ga(fD.h);
                     txt=`Análise para <strong>${fe!=='TODAS'?'Estufa '+fe:'Geral'} (${fs!=='TODOS'?'Setor '+fs:'Geral'} - ${fc!=='TODOS'?'Ciclo '+fc:'Todos'})</strong>:<br>Num período de <strong>${dd} dias</strong>:<br>🍃 Folha cresceu <strong>${lG.toFixed(1)} cm</strong> (Ritmo: ${((lG/dd)*7).toFixed(1)} cm/sem).<br>📏 Altura cresceu <strong>${hG.toFixed(1)} cm</strong> (Ritmo: ${((hG/dd)*7).toFixed(1)} cm/sem).`;
                 } else if(cm==='FOLHA'){
-                    const lk=stk[stk.length-1], ld=g[lk], st=[]; Object.keys(ld).forEach(e=>{const a=ld[e].a; if(a&&a.length) st.push({n:e, ab:a.reduce((a,b)=>a+b,0)/a.length});});
-                    if(st.length>1){st.sort((a,b)=>b.ab-a.ab); txt=`Pior posição em <strong>${tlm[lk]}</strong>: <strong>${st[0].n}</strong> (${st[0].ab.toFixed(1)} abortos). <span class="text-red-600 font-bold block mt-1">⚠️ Alerta de perda nesta posição!</span>`;}
+                    const lk=stk[stk.length-1], ld=g[lk], st=[]; 
+                    // MUDANÇA: SOMA de abortos para a análise da folha
+                    Object.keys(ld).forEach(e=>{const a=ld[e].a; if(a&&a.length) st.push({n:e, ab:a.reduce((a,b)=>a+b,0)});});
+                    if(st.length>1){st.sort((a,b)=>b.ab-a.ab); txt=`Pior posição em <strong>${tlm[lk]}</strong>: <strong>${st[0].n}</strong> (total de ${st[0].ab.toFixed(0)} abortos). <span class="text-red-600 font-bold block mt-1">⚠️ Alerta de perda nesta posição!</span>`;}
                 } else if(stk.length>0 && (cm==='ESTUFA'||cm==='SETOR'||cm==='VARIEDADE')){
                     const lk=stk[stk.length-1], ld=g[lk], st=[]; Object.keys(ld).forEach(e=>{const h=ld[e].h; if(h&&h.length) st.push({n:e, h:h.reduce((a,b)=>a+b,0)/h.length});});
                     if(st.length>1){st.sort((a,b)=>b.h-a.h); txt=`Em <strong>${tlm[lk]}</strong>, <strong>${st[0].n}</strong> lidera o crescimento (${st[0].h.toFixed(1)} cm). Diferença para o menor: <strong>${(st[0].h-st[st.length-1].h).toFixed(1)} cm</strong>.`;}
