@@ -169,6 +169,34 @@
                         </div>
                     </div>
 
+                    <!-- Frutos e Abortos (Dinâmico) -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-3 border-b border-slate-200 pb-2">
+                            <h3 class="text-sm font-black text-slate-700 uppercase flex items-center gap-2">
+                                <i data-lucide="apple" class="w-4 h-4 text-brand-600"></i> Frutos e Abortos
+                            </h3>
+                            <button type="button" onclick="addFruitRow()" class="text-[10px] font-bold bg-brand-100 text-brand-700 px-2.5 py-1 rounded-lg hover:bg-brand-200 transition-colors flex items-center gap-1 active:scale-95">
+                                <i data-lucide="plus" class="w-3 h-3"></i> Adicionar
+                            </button>
+                        </div>
+                        
+                        <div id="fruitsContainer" class="space-y-3">
+                            <!-- Fruto 1 -->
+                            <div class="flex flex-wrap sm:flex-nowrap gap-2 items-center group">
+                                <input type="text" id="fruit1_num" placeholder="Nº Folha" oninput="updatePreview()" class="w-full sm:w-20 shrink-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <input type="number" id="fruit1_frutos" placeholder="Frutos" min="0" oninput="updatePreview()" class="flex-1 sm:w-20 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <input type="number" id="fruit1_abortos" placeholder="Abortos" min="0" oninput="updatePreview()" class="flex-1 sm:w-20 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <input type="text" id="fruit1_motivo" placeholder="Motivo (se houver aborto)" oninput="updatePreview()" class="w-full sm:flex-1 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <button type="button" onclick="this.parentElement.remove(); updatePreview();" class="shrink-0 text-slate-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-50 group-hover:opacity-100 hidden sm:block" title="Remover">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" onclick="this.parentElement.remove(); updatePreview();" class="w-full sm:hidden shrink-0 text-red-500 p-2 rounded-lg bg-red-50 transition-colors text-xs font-bold uppercase mt-1">
+                                    Remover Linha
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Tamanho da Folha -->
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <div class="flex justify-between items-center mb-3 border-b border-slate-200 pb-2">
@@ -335,6 +363,7 @@
                         <option value="ESTUFA">Comparar Estufas</option>
                         <option value="SETOR">Comparar Setores</option>
                         <option value="VARIEDADE">Comparar Variedades</option>
+                        <option value="FOLHA">Comparar Posição da Folha</option>
                     </select>
                 </div>
             </div>
@@ -344,34 +373,25 @@
                 <div>
                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Filtrar por Estufa</label>
                     <select id="dashEstufa" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
-                        <option value="TODAS">Todas as Estufas</option>
-                        <option value="1">Estufa 1</option>
-                        <option value="2">Estufa 2</option>
-                        <option value="3">Estufa 3</option>
-                        <option value="4">Estufa 4</option>
+                        <option value="TODAS">Carregando...</option>
                     </select>
                 </div>
                 <div>
                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Filtrar por Setor</label>
                     <select id="dashSetor" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
-                        <option value="TODOS">Todos os Setores</option>
-                        <option value="1">Setor 1</option>
-                        <option value="2">Setor 2</option>
-                        <option value="3">Setor 3</option>
-                        <option value="4">Setor 4</option>
-                        <option value="5">Setor 5</option>
+                        <option value="TODOS">Carregando...</option>
                     </select>
                 </div>
                 <div>
                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Filtrar por Ciclo</label>
                     <select id="dashCiclo" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
-                        <option value="TODOS">Todos os Ciclos</option>
+                        <option value="TODOS">Carregando...</option>
                     </select>
                 </div>
             </div>
 
             <!-- KPIs do Dashboard (Métricas Rápidas) -->
-            <div id="dashKPIs" class="hidden grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div id="dashKPIs" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 opacity-5"><i data-lucide="ruler" class="w-24 h-24 text-blue-500"></i></div>
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 relative z-10">Altura Média</span>
@@ -386,6 +406,15 @@
                     <div class="absolute -right-4 -top-4 opacity-5"><i data-lucide="git-branch" class="w-24 h-24 text-amber-500"></i></div>
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 relative z-10">Comp. Médio Haste</span>
                     <span id="kpiHaste" class="text-3xl font-black text-amber-600 relative z-10">-- cm</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-5"><i data-lucide="pie-chart" class="w-24 h-24 text-orange-500"></i></div>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 relative z-10">Sucesso / Aborto</span>
+                    <div class="flex items-center gap-2 relative z-10">
+                        <span id="kpiAproveitado" class="text-2xl font-black text-brand-600" title="% Aproveitamento">--%</span>
+                        <span class="text-slate-300">|</span>
+                        <span id="kpiAbortado" class="text-2xl font-black text-red-500" title="% Aborto">--%</span>
+                    </div>
                 </div>
             </div>
 
@@ -402,7 +431,6 @@
 
             <!-- Gráficos -->
             <div id="dashCharts" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Gráfico de Altura -->
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
                     <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
                         <i data-lucide="ruler" class="w-4 h-4 text-blue-500"></i> Evolução da Altura Média (cm)
@@ -411,8 +439,6 @@
                         <canvas id="chartAltura"></canvas>
                     </div>
                 </div>
-
-                <!-- Gráfico de Folhas -->
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
                     <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
                         <i data-lucide="scan-line" class="w-4 h-4 text-emerald-500"></i> Tamanho Médio das Folhas (cm)
@@ -421,14 +447,28 @@
                         <canvas id="chartFolhas"></canvas>
                     </div>
                 </div>
-
-                <!-- Gráfico de Hastes -->
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col lg:col-span-2">
                     <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
                         <i data-lucide="git-branch" class="w-4 h-4 text-amber-500"></i> Desenvolvimento das Hastes (cm)
                     </h3>
                     <div class="relative h-64 w-full">
                         <canvas id="chartHastes"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                    <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <i data-lucide="apple" class="w-4 h-4 text-orange-500"></i> Média de Frutos e Abortos
+                    </h3>
+                    <div class="relative h-64 w-full">
+                        <canvas id="chartFrutos"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                    <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <i data-lucide="pie-chart" class="w-4 h-4 text-red-500"></i> Principais Motivos de Aborto
+                    </h3>
+                    <div class="relative h-64 w-full flex justify-center">
+                        <canvas id="chartMotivos"></canvas>
                     </div>
                 </div>
             </div>
@@ -444,7 +484,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMAÇÃO DE LIMPEZA (LIMPAR TUDO) -->
+    <!-- MODAL DE CONFIRMAÇÃO DE LIMPEZA -->
     <div id="clearAllModal" class="fixed inset-0 bg-black/60 z-[60] hidden flex justify-center items-center backdrop-blur-sm transition-opacity duration-300">
         <div class="bg-white rounded-2xl shadow-2xl p-6 w-11/12 max-w-md transform transition-all scale-100">
             <div class="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-red-50 mb-4">
@@ -488,7 +528,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE CARREGAMENTO (GERAÇÃO DA IMAGEM) -->
+    <!-- MODAL DE CARREGAMENTO -->
     <div id="loadingModal" class="fixed inset-0 bg-black/60 z-[80] hidden flex justify-center items-center backdrop-blur-sm transition-opacity duration-300">
         <div class="bg-white rounded-3xl shadow-2xl p-8 w-11/12 max-w-sm transform transition-all scale-100 text-center flex flex-col items-center">
             <div class="flex items-center justify-center mb-5">
@@ -527,19 +567,20 @@
         let currentPhotos = [];
         let leafCount = 1;
         let stemCount = 1;
-        let records = []; // Array que guardará todas as plantas avaliadas
-        let editingIndex = -1; // Variável para controlar o modo de edição
+        let fruitCount = 1;
+        let records = []; 
+        let editingIndex = -1; 
 
         let chartAlturaInst = null;
         let chartFolhasInst = null;
         let chartHastesInst = null;
+        let chartFrutosInst = null;
+        let chartMotivosInst = null;
         
-        let dashboardRawData = []; // Variável para armazenar os dados baixados da planilha
+        let dashboardRawData = []; 
 
-        // Registrar Plugin de Rótulos (DataLabels) no Chart.js
         Chart.register(ChartDataLabels);
 
-        // Gestão de Vistas (Formulário vs Dashboard)
         function toggleView(view) {
             const formView = document.getElementById('view-form');
             const dashView = document.getElementById('view-dashboard');
@@ -553,11 +594,7 @@
                 btnNova.classList.remove('hidden');
                 btnDash.classList.add('hidden');
                 btnEnviar.classList.add('hidden');
-                
-                // Carrega os dados na primeira vez que abre o dashboard automaticamente
-                if (!chartAlturaInst) {
-                    loadDashboardData();
-                }
+                if (!chartAlturaInst) loadDashboardData();
             } else {
                 formView.classList.remove('hidden');
                 dashView.classList.add('hidden');
@@ -567,14 +604,12 @@
             }
         }
 
-        // Renderizar a listagem simples no cartão de itens gerados
         function renderRecordsList() {
             const container = document.getElementById('recordsListContainer');
             if (records.length === 0) {
                 container.innerHTML = '<div class="text-center text-slate-400 text-xs italic py-6">Nenhum item adicionado ainda. Preencha o formulário acima e adicione.</div>';
                 return;
             }
-
             container.innerHTML = records.map((rec, idx) => {
                 const active = idx === editingIndex ? 'border-blue-400 bg-blue-50 ring-1' : 'border-slate-200 bg-slate-50';
                 return `
@@ -584,15 +619,10 @@
                         <p class="text-xs text-slate-500">Linha ${rec.line} | Vaso ${rec.pot} | Altura: ${rec.height ? rec.height + ' cm' : '-'}</p>
                     </div>
                     <div class="flex items-center gap-1">
-                        <button type="button" onclick="editRecord(${idx})" class="p-2 text-blue-500 hover:bg-blue-100 rounded-lg transition-colors" title="Editar">
-                            <i data-lucide="pencil" class="w-4 h-4"></i>
-                        </button>
-                        <button type="button" onclick="removeRecord(${idx})" class="p-2 text-red-500 hover:bg-red-100 rounded-lg transition-colors" title="Remover">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
+                        <button type="button" onclick="editRecord(${idx})" class="p-2 text-blue-500 hover:bg-blue-100 rounded-lg transition-colors"><i data-lucide="pencil" class="w-4 h-4"></i></button>
+                        <button type="button" onclick="removeRecord(${idx})" class="p-2 text-red-500 hover:bg-red-100 rounded-lg transition-colors"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                     </div>
-                </div>
-                `;
+                </div>`;
             }).join('');
             lucide.createIcons();
         }
@@ -607,30 +637,15 @@
         }
 
         function updateItemsCount() {
-            document.getElementById('itemsCountBadge').innerText = records.length;
-            if(records.length > 0) {
-                document.getElementById('itemsCountBadge').classList.replace('bg-slate-400', 'bg-brand-500');
-            } else {
-                document.getElementById('itemsCountBadge').classList.replace('bg-brand-500', 'bg-slate-400');
-            }
+            const badge = document.getElementById('itemsCountBadge');
+            badge.innerText = records.length;
+            if(records.length > 0) badge.classList.replace('bg-slate-400', 'bg-brand-500');
+            else badge.classList.replace('bg-brand-500', 'bg-slate-400');
         }
 
-        // Editar Planta Registrada
         function editRecord(index) {
-            // Verifica se há algo no rascunho atual antes de sobrescrever
-            const draftGreenhouse = document.getElementById('greenhouse') ? document.getElementById('greenhouse').value : '';
-            const draftSector = document.getElementById('sector').value;
-            
-            if (editingIndex === -1 && (draftGreenhouse || draftSector)) {
-                if (!confirm('Existem dados não guardados no formulário. Deseja descartá-los para editar esta planta?')) {
-                    return;
-                }
-            }
-
             const rec = records[index];
             editingIndex = index;
-
-            // 1. Carregar valores simples
             document.getElementById('reportDate').value = rec.date;
             document.getElementById('greenhouse').value = rec.greenhouse;
             document.getElementById('sector').value = rec.sector;
@@ -639,116 +654,59 @@
             document.getElementById('potNumber').value = rec.pot;
             document.getElementById('plantHeight').value = rec.height;
             document.getElementById('observations').value = rec.obs;
-
-            // 2. Carregar Variedade
-            const varietySelect = document.getElementById('varietySelect');
-            const customVarietyContainer = document.getElementById('customVarietyContainer');
-            const customVariety = document.getElementById('customVariety');
-
-            const isStandard = Array.from(varietySelect.options).some(opt => opt.value === rec.variety && rec.variety !== 'Outra');
-            
-            if (isStandard) {
-                varietySelect.value = rec.variety;
-                customVarietyContainer.classList.add('hidden');
-                customVariety.removeAttribute('required');
-                customVariety.value = '';
+            const vs = document.getElementById('varietySelect');
+            const cvc = document.getElementById('customVarietyContainer');
+            const cv = document.getElementById('customVariety');
+            if (Array.from(vs.options).some(o => o.value === rec.variety && rec.variety !== 'Outra')) {
+                vs.value = rec.variety; cvc.classList.add('hidden'); cv.value = '';
             } else {
-                varietySelect.value = 'Outra';
-                customVarietyContainer.classList.remove('hidden');
-                customVariety.setAttribute('required', 'required');
-                customVariety.value = rec.variety;
+                vs.value = 'Outra'; cvc.classList.remove('hidden'); cv.value = rec.variety;
             }
-
-            // 3. Carregar Folhas
-            document.getElementById('leavesContainer').innerHTML = '';
-            leafCount = 0;
-            if (rec.leaves.length > 0) {
-                rec.leaves.forEach(l => {
-                    addLeafRow();
-                    document.getElementById(`leaf${leafCount}_num`).value = l.num || '';
-                    document.getElementById(`leaf${leafCount}_comp`).value = l.comp || '';
-                    document.getElementById(`leaf${leafCount}_larg`).value = l.larg || '';
-                });
-            } else {
-                addLeafRow();
-            }
-
-            // 4. Carregar Hastes
-            document.getElementById('stemsContainer').innerHTML = '';
-            stemCount = 0;
-            if (rec.stems.length > 0) {
-                rec.stems.forEach(s => {
-                    addStemRow();
-                    document.getElementById(`stem${stemCount}_num`).value = s.num || '';
-                    document.getElementById(`stem${stemCount}_comp`).value = s.comp || '';
-                });
-            } else {
-                addStemRow();
-            }
-
-            // 5. Carregar Fotos
-            currentPhotos = [...rec.photos];
-            renderPhotoPreviews();
-
-            // 6. Atualizar Visuais (Botão, Título e Borda)
+            document.getElementById('leavesContainer').innerHTML = ''; leafCount = 0;
+            if (rec.leaves.length > 0) rec.leaves.forEach(l => { addLeafRow(); document.getElementById(`leaf${leafCount}_num`).value = l.num; document.getElementById(`leaf${leafCount}_comp`).value = l.comp; document.getElementById(`leaf${leafCount}_larg`).value = l.larg; });
+            else addLeafRow();
+            document.getElementById('stemsContainer').innerHTML = ''; stemCount = 0;
+            if (rec.stems.length > 0) rec.stems.forEach(s => { addStemRow(); document.getElementById(`stem${stemCount}_num`).value = s.num; document.getElementById(`stem${stemCount}_comp`).value = s.comp; });
+            else addStemRow();
+            document.getElementById('fruitsContainer').innerHTML = ''; fruitCount = 0;
+            if (rec.fruits && rec.fruits.length > 0) rec.fruits.forEach(f => { addFruitRow(); document.getElementById(`fruit${fruitCount}_num`).value = f.num; document.getElementById(`fruit${fruitCount}_frutos`).value = f.frutos; document.getElementById(`fruit${fruitCount}_abortos`).value = f.abortos; document.getElementById(`fruit${fruitCount}_motivo`).value = f.motivo; });
+            else addFruitRow();
+            currentPhotos = [...rec.photos]; renderPhotoPreviews();
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i data-lucide="save" class="w-5 h-5"></i> <span>Salvar Alterações</span>';
-            btn.className = "w-full mt-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl text-sm transition-all shadow-lg shadow-blue-600/20 flex justify-center items-center gap-2 uppercase tracking-widest active:scale-95";
-            
+            btn.className = "w-full mt-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl text-sm transition-all shadow-lg flex justify-center items-center gap-2 uppercase tracking-widest active:scale-95";
             document.getElementById('formTitle').innerHTML = '<i data-lucide="pencil" class="text-blue-600"></i> Editando Planta Registada';
             document.getElementById('formContainer').classList.add('border-blue-300', 'ring-2', 'ring-blue-100');
-            
-            // 7. Rolar para o topo
             document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-            renderRecordsList();
-            updatePreview();
-            lucide.createIcons();
+            renderRecordsList(); updatePreview(); lucide.createIcons();
         }
 
-        // Variedade Dinâmica
         function handleVarietyChange() {
-            const select = document.getElementById('varietySelect');
-            const customContainer = document.getElementById('customVarietyContainer');
-            const customInput = document.getElementById('customVariety');
-            
-            if (select.value === 'Outra') {
-                customContainer.classList.remove('hidden');
-                customInput.setAttribute('required', 'required');
-            } else {
-                customContainer.classList.add('hidden');
-                customInput.removeAttribute('required');
-            }
+            const s = document.getElementById('varietySelect');
+            const c = document.getElementById('customVarietyContainer');
+            if (s.value === 'Outra') c.classList.remove('hidden'); else c.classList.add('hidden');
             updatePreview();
         }
 
         function getVarietyName() {
-            const selectVal = document.getElementById('varietySelect');
-            if (!selectVal) return '';
-            
-            if (selectVal.value === 'Outra') {
-                return document.getElementById('customVariety').value;
-            }
-            return selectVal.value;
+            const s = document.getElementById('varietySelect');
+            return s.value === 'Outra' ? document.getElementById('customVariety').value : s.value;
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             lucide.createIcons();
-            const dateInput = document.getElementById('reportDate');
-            if (!dateInput.value) {
-                const today = new Date();
-                const localDate = new Date(today.getTime() - (today.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-                dateInput.value = localDate;
+            const di = document.getElementById('reportDate');
+            if (!di.value) {
+                const t = new Date();
+                di.value = new Date(t.getTime() - (t.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
             }
             updatePreview();
         });
 
-        // Adicionar Planta ao array de registos
         function addRecord() {
-            const form = document.getElementById('checklistForm');
-            if (!form.checkValidity()) { form.reportValidity(); return; }
-
-            const record = {
+            const f = document.getElementById('checklistForm');
+            if (!f.checkValidity()) { f.reportValidity(); return; }
+            const r = {
                 date: document.getElementById('reportDate').value,
                 greenhouse: document.getElementById('greenhouse').value,
                 sector: document.getElementById('sector').value,
@@ -758,1088 +716,346 @@
                 pot: document.getElementById('potNumber').value,
                 height: document.getElementById('plantHeight').value,
                 obs: document.getElementById('observations').value,
-                leaves: [],
-                stems: [],
-                photos: [...currentPhotos]
+                leaves: [], stems: [], fruits: [], photos: [...currentPhotos]
             };
-
             for(let i=1; i<=leafCount; i++) {
-                const num = document.getElementById(`leaf${i}_num`)?.value;
-                const comp = document.getElementById(`leaf${i}_comp`)?.value;
-                const larg = document.getElementById(`leaf${i}_larg`)?.value;
-                if(num || comp || larg) record.leaves.push({num, comp, larg});
+                const n = document.getElementById(`leaf${i}_num`)?.value, c = document.getElementById(`leaf${i}_comp`)?.value, l = document.getElementById(`leaf${i}_larg`)?.value;
+                if(n||c||l) r.leaves.push({num:n, comp:c, larg:l});
             }
-
             for(let i=1; i<=stemCount; i++) {
-                const num = document.getElementById(`stem${i}_num`)?.value;
-                const comp = document.getElementById(`stem${i}_comp`)?.value;
-                if(num || comp) record.stems.push({num, comp});
+                const n = document.getElementById(`stem${i}_num`)?.value, c = document.getElementById(`stem${i}_comp`)?.value;
+                if(n||c) r.stems.push({num:n, comp:c});
             }
-
-            if (editingIndex >= 0) {
-                records[editingIndex] = record;
-            } else {
-                records.push(record);
+            for(let i=1; i<=fruitCount; i++) {
+                const n = document.getElementById(`fruit${i}_num`)?.value, fr = document.getElementById(`fruit${i}_frutos`)?.value, ab = document.getElementById(`fruit${i}_abortos`)?.value, mo = document.getElementById(`fruit${i}_motivo`)?.value;
+                if(n||fr||ab||mo) r.fruits.push({num:n, frutos:fr, abortos:ab, motivo:mo});
             }
-            
-            updateItemsCount();
-            
-            // Limpa formulário silenciosamente (mantém a data)
-            clearFormSilently();
-            
-            // Atualiza a lista visual em baixo e o preview à direita
-            renderRecordsList();
-            updatePreview();
+            if (editingIndex >= 0) records[editingIndex] = r; else records.push(r);
+            updateItemsCount(); clearFormSilently(); renderRecordsList(); updatePreview();
         }
 
         function clearFormSilently() {
-            editingIndex = -1; // Reset do modo de edição
-            
-            // Reset do visual do formulário
+            editingIndex = -1;
             const btn = document.getElementById('submitBtn');
-            if (btn) {
-                btn.innerHTML = '<i data-lucide="plus-circle" class="w-5 h-5"></i> <span>Adicionar ao Relatório</span>';
-                btn.className = "w-full mt-6 py-4 bg-slate-800 hover:bg-slate-900 text-white font-black rounded-xl text-sm transition-all shadow-lg shadow-slate-800/20 flex justify-center items-center gap-2 uppercase tracking-widest active:scale-95";
-            }
-            const formTitle = document.getElementById('formTitle');
-            if (formTitle) {
-                formTitle.innerHTML = '<i data-lucide="file-plus-2" class="text-brand-500"></i> Adicionar ao Relatório';
-            }
-            const formContainer = document.getElementById('formContainer');
-            if (formContainer) {
-                formContainer.classList.remove('border-blue-300', 'ring-2', 'ring-blue-100');
-            }
-
-            const dateVal = document.getElementById('reportDate').value;
+            btn.innerHTML = '<i data-lucide="plus-circle" class="w-5 h-5"></i> <span>Adicionar ao Relatório</span>';
+            btn.className = "w-full mt-6 py-4 bg-slate-800 hover:bg-slate-900 text-white font-black rounded-xl text-sm transition-all shadow-lg flex justify-center items-center gap-2 uppercase active:scale-95";
+            document.getElementById('formTitle').innerHTML = '<i data-lucide="file-plus-2" class="text-brand-500"></i> Adicionar ao Relatório';
+            document.getElementById('formContainer').classList.remove('border-blue-300', 'ring-2', 'ring-blue-100');
+            const d = document.getElementById('reportDate').value;
             document.getElementById('checklistForm').reset();
-            document.getElementById('reportDate').value = dateVal;
-            
-            leafCount = 1;
-            document.getElementById('leavesContainer').innerHTML = `
-                <div class="flex gap-2 items-center group">
-                    <input type="text" id="leaf1_num" placeholder="Nº Folha" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                    <input type="number" step="0.01" id="leaf1_comp" placeholder="Comp. (cm)" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                    <input type="number" step="0.01" id="leaf1_larg" placeholder="Larg. (cm)" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                    <button type="button" onclick="this.parentElement.remove(); updatePreview();" class="shrink-0 text-slate-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-50 group-hover:opacity-100" title="Remover">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            `;
-
-            stemCount = 1;
-            document.getElementById('stemsContainer').innerHTML = `
-                <div class="flex gap-2 items-center group">
-                    <input type="text" id="stem1_num" placeholder="Nº Haste" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                    <input type="number" step="0.01" id="stem1_comp" placeholder="Comprimento (cm)" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                    <button type="button" onclick="this.parentElement.remove(); updatePreview();" class="shrink-0 text-slate-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-50 group-hover:opacity-100" title="Remover">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            `;
-
-            document.getElementById('customVarietyContainer').classList.add('hidden');
-            document.getElementById('customVariety').removeAttribute('required');
-            currentPhotos = [];
-            renderPhotoPreviews();
-            renderRecordsList(); // Atualiza a lista para remover a tag (Editando)
+            document.getElementById('reportDate').value = d;
+            leafCount = 1; document.getElementById('leavesContainer').innerHTML = '<div class="flex gap-2 items-center group"><input type="text" id="leaf1_num" placeholder="Nº Folha" oninput="updatePreview()" class="flex-1 p-2 border border-slate-300 rounded-lg text-sm outline-none"><input type="number" step="0.01" id="leaf1_comp" placeholder="Comp. (cm)" oninput="updatePreview()" class="flex-1 p-2 border border-slate-300 rounded-lg text-sm outline-none"><input type="number" step="0.01" id="leaf1_larg" placeholder="Larg. (cm)" oninput="updatePreview()" class="flex-1 p-2 border border-slate-300 rounded-lg text-sm outline-none"></div>';
+            stemCount = 1; document.getElementById('stemsContainer').innerHTML = '<div class="flex gap-2 items-center group"><input type="text" id="stem1_num" placeholder="Nº Haste" oninput="updatePreview()" class="flex-1 p-2 border border-slate-300 rounded-lg text-sm outline-none"><input type="number" step="0.01" id="stem1_comp" placeholder="Comprimento (cm)" oninput="updatePreview()" class="flex-1 p-2 border border-slate-300 rounded-lg text-sm outline-none"></div>';
+            fruitCount = 1; document.getElementById('fruitsContainer').innerHTML = '<div class="flex flex-wrap sm:flex-nowrap gap-2 items-center group"><input type="text" id="fruit1_num" placeholder="Nº Folha" oninput="updatePreview()" class="w-full sm:w-20 p-2 border border-slate-300 rounded-lg text-sm outline-none"><input type="number" id="fruit1_frutos" placeholder="Frutos" min="0" oninput="updatePreview()" class="flex-1 p-2 border border-slate-300 rounded-lg text-sm outline-none"><input type="number" id="fruit1_abortos" placeholder="Abortos" min="0" oninput="updatePreview()" class="flex-1 p-2 border border-slate-300 rounded-lg text-sm outline-none"><input type="text" id="fruit1_motivo" placeholder="Motivo" oninput="updatePreview()" class="w-full sm:flex-1 p-2 border border-slate-300 rounded-lg text-sm outline-none"></div>';
+            currentPhotos = []; renderPhotoPreviews(); renderRecordsList();
         }
 
-        // Função de Atualização do Relatório à Direita
         function updatePreview() {
-            // Atualizar cabeçalho da data geral
-            const dateVal = document.getElementById('reportDate').value;
+            const dv = document.getElementById('reportDate').value;
             let displayDate = "--/--/----";
-            if (dateVal) {
-                const parts = dateVal.split('-');
-                displayDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
-                displayDate += ` às ${timeStr}`;
-            }
+            if (dv) { const p = dv.split('-'); displayDate = `${p[2]}/${p[1]}/${p[0]} às ${new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})}`; }
             document.getElementById('previewDateTime').innerText = displayDate;
-
-            // Criar uma lista temporária com os items já gerados + o que está a ser escrito no form (rascunho)
-            let itemsToRender = [...records];
-            
-            // Verificar se o form tem pelo menos a Estufa ou Setor preenchido para mostrar o "Rascunho"
-            const draftGreenhouse = document.getElementById('greenhouse') ? document.getElementById('greenhouse').value : '';
-            const draftSector = document.getElementById('sector').value;
-            
-            if (draftGreenhouse || draftSector) {
-                const draftLeaves = [];
-                for(let i=1; i<=leafCount; i++) {
-                    const num = document.getElementById(`leaf${i}_num`)?.value;
-                    const comp = document.getElementById(`leaf${i}_comp`)?.value;
-                    const larg = document.getElementById(`leaf${i}_larg`)?.value;
-                    if(num || comp || larg) draftLeaves.push({num, comp, larg});
-                }
-                const draftStems = [];
-                for(let i=1; i<=stemCount; i++) {
-                    const num = document.getElementById(`stem${i}_num`)?.value;
-                    const comp = document.getElementById(`stem${i}_comp`)?.value;
-                    if(num || comp) draftStems.push({num, comp});
-                }
-
-                const draftItem = {
-                    isDraft: true,
-                    isEditing: editingIndex !== -1, // Marca se é edição de um item existente
-                    greenhouse: draftGreenhouse,
-                    sector: draftSector,
-                    cycle: document.getElementById('cycle')?.value,
-                    variety: getVarietyName(),
-                    line: document.getElementById('lineNumber').value,
-                    pot: document.getElementById('potNumber').value,
-                    height: document.getElementById('plantHeight').value,
-                    obs: document.getElementById('observations').value,
-                    leaves: draftLeaves,
-                    stems: draftStems,
-                    photos: currentPhotos
-                };
-
-                // Se estivermos editando, substitui o item na lista temporária para não mostrar duplicado no Preview
-                if (editingIndex !== -1) {
-                    itemsToRender[editingIndex] = draftItem;
-                } else {
-                    itemsToRender.push(draftItem);
-                }
+            let itr = [...records];
+            const dg = document.getElementById('greenhouse').value, ds = document.getElementById('sector').value;
+            if (dg || ds) {
+                const dl = [], dst = [], df = [];
+                for(let i=1;i<=leafCount;i++) { const n = document.getElementById(`leaf${i}_num`)?.value, c = document.getElementById(`leaf${i}_comp`)?.value, l = document.getElementById(`leaf${i}_larg`)?.value; if(n||c||l) dl.push({num:n, comp:c, larg:l}); }
+                for(let i=1;i<=stemCount;i++) { const n = document.getElementById(`stem${i}_num`)?.value, c = document.getElementById(`stem${i}_comp`)?.value; if(n||c) dst.push({num:n, comp:c}); }
+                for(let i=1;i<=fruitCount;i++) { const n = document.getElementById(`fruit${i}_num`)?.value, fr = document.getElementById(`fruit${i}_frutos`)?.value, ab = document.getElementById(`fruit${i}_abortos`)?.value, mo = document.getElementById(`fruit${i}_motivo`)?.value; if(n||fr||ab||mo) df.push({num:n, frutos:fr, abortos:ab, motivo:mo}); }
+                const draft = { isDraft:true, isEditing:editingIndex!==-1, greenhouse:dg, sector:ds, cycle:document.getElementById('cycle').value, variety:getVarietyName(), line:document.getElementById('lineNumber').value, pot:document.getElementById('potNumber').value, height:document.getElementById('plantHeight').value, obs:document.getElementById('observations').value, leaves:dl, stems:dst, fruits:df, photos:currentPhotos };
+                if (editingIndex!==-1) itr[editingIndex] = draft; else itr.push(draft);
             }
-
             const container = document.getElementById('previewItemsContainer');
-            
-            if (itemsToRender.length === 0) {
-                container.innerHTML = `<div class="w-full p-10 bg-white rounded-2xl border border-slate-200 text-center text-slate-400 italic text-sm shadow-sm">Comece a preencher o formulário para visualizar os dados técnicos aqui.</div>`;
-                return;
-            }
-
-            let finalHtml = '';
-
-            itemsToRender.forEach((item, index) => {
-                let draftLabel = '';
-                if (item.isDraft) {
-                    draftLabel = item.isEditing 
-                        ? '<span class="text-blue-500 font-bold ml-1">(EDITANDO)</span>' 
-                        : '<span class="text-amber-500 font-bold ml-1">(RASCUNHO)</span>';
-                }
-                
-                finalHtml += `
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden w-full">
-                        <div class="bg-brand-50 text-[10px] font-black px-3 py-2.5 border-b border-slate-200 text-brand-700 uppercase tracking-widest text-center flex flex-col justify-center">
-                            <span>PLANTA #${index + 1} ${draftLabel}</span>
-                            <span class="text-slate-600 mt-0.5">ESTUFA ${item.greenhouse || '-'} / SETOR ${item.sector || '-'} / CICLO ${item.cycle || '-'}</span>
-                        </div>
-
-                        <!-- 1. IDENTIFICAÇÃO -->
-                        <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b border-slate-200 text-slate-500 uppercase tracking-widest">
-                            1. IDENTIFICAÇÃO
-                        </div>
-                        <div class="grid grid-cols-2 text-[11px]">
-                            <div class="bg-white font-bold text-slate-400 p-2 border-r border-b border-slate-100 uppercase">Variedade</div>
-                            <div class="p-2 border-b border-slate-100 font-bold text-slate-800 bg-white">${item.variety || '---'}</div>
-                            
-                            <div class="bg-white font-bold text-slate-400 p-2 border-r border-b border-slate-100 uppercase">L. / Vaso</div>
-                            <div class="p-2 border-b border-slate-100 font-bold text-slate-800 bg-white">${item.line || '-'} / ${item.pot || '-'}</div>
-                            
-                            <div class="col-span-2 flex border-b border-slate-200 bg-white">
-                                <div class="w-1/2 font-bold text-slate-400 p-2 border-r border-slate-100 uppercase flex items-center">Altura da Planta</div>
-                                <div class="w-1/2 p-2 font-black text-brand-600 text-[13px] text-center bg-brand-50/30">${item.height ? item.height + ' cm' : '---'}</div>
-                            </div>
-                        </div>
-
-                        <!-- 2. FOLHAS -->
-                        <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b border-slate-200 text-slate-500 uppercase tracking-widest">
-                            2. TAMANHO DA FOLHA
-                        </div>
-                        <table class="w-full text-[11px] text-center border-collapse">
-                            <thead class="bg-white font-bold text-slate-400 text-[9px]">
-                                <tr>
-                                    <th class="border-b border-r border-slate-100 py-1.5 w-1/3 uppercase">Nº Folha</th>
-                                    <th class="border-b border-r border-slate-100 py-1.5 w-1/3 uppercase">Compr.</th>
-                                    <th class="border-b border-slate-100 py-1.5 w-1/3 uppercase">Largura</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                `;
-
-                if (item.leaves.length === 0) {
-                    finalHtml += `<tr><td colspan="3" class="py-3 bg-white italic text-slate-400 text-[10px]">Sem dados.</td></tr>`;
-                } else {
-                    item.leaves.forEach((l, idx) => {
-                        const rowBg = idx % 2 === 0 ? 'bg-slate-50/30' : 'bg-white';
-                        finalHtml += `
-                            <tr class="${rowBg}">
-                                <td class="border-r border-b border-slate-100 py-2 px-2 font-bold text-slate-700">${l.num || '-'}</td>
-                                <td class="border-r border-b border-slate-100 py-2 px-2 font-bold text-slate-600">${l.comp ? l.comp + ' cm' : '-'}</td>
-                                <td class="border-b border-slate-100 py-2 px-2 font-bold text-slate-600">${l.larg ? l.larg + ' cm' : '-'}</td>
-                            </tr>
-                        `;
-                    });
-                }
-
-                finalHtml += `
-                            </tbody>
-                        </table>
-
-                        <!-- 3. HASTES -->
-                        <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b border-slate-200 text-slate-500 uppercase tracking-widest">
-                            3. MEDIÇÃO DAS HASTES
-                        </div>
-                        <table class="w-full text-[11px] text-center border-collapse">
-                            <thead class="bg-white font-bold text-slate-400 text-[9px]">
-                                <tr>
-                                    <th class="border-b border-r border-slate-100 py-1.5 w-1/2 uppercase">Nº Haste</th>
-                                    <th class="border-b border-slate-100 py-1.5 w-1/2 uppercase">Comprimento</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                `;
-
-                if (item.stems.length === 0) {
-                    finalHtml += `<tr><td colspan="2" class="py-3 bg-white italic text-slate-400 text-[10px]">Sem dados.</td></tr>`;
-                } else {
-                    item.stems.forEach((s, idx) => {
-                        const rowBg = idx % 2 === 0 ? 'bg-slate-50/30' : 'bg-white';
-                        finalHtml += `
-                            <tr class="${rowBg}">
-                                <td class="border-r border-b border-slate-100 py-2 px-2 font-bold text-slate-700">${s.num || '-'}</td>
-                                <td class="border-b border-slate-100 py-2 px-2 font-bold text-slate-600">${s.comp ? s.comp + ' cm' : '-'}</td>
-                            </tr>
-                        `;
-                    });
-                }
-
-                finalHtml += `
-                            </tbody>
-                        </table>
-
-                        <!-- 4. OBSERVAÇÕES E FOTOS -->
-                        <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b border-slate-200 text-slate-500 uppercase tracking-widest">
-                            4. OBSERVAÇÕES E EVIDÊNCIAS
-                        </div>
-                        <div class="p-3 text-[10px] bg-white text-slate-600 font-medium leading-relaxed flex-1">
-                `;
-
-                if (item.obs.trim().length > 0) {
-                    finalHtml += `<div class="whitespace-pre-wrap">${item.obs}</div>`;
-                } else {
-                    finalHtml += `<span class="italic text-slate-400">Nenhuma observação.</span>`;
-                }
-
-                if (item.photos && item.photos.length > 0) {
-                    finalHtml += `<div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-100">`;
-                    item.photos.forEach(p => {
-                        finalHtml += `<img src="${p}" class="w-full h-20 object-cover rounded-lg border border-slate-200 shadow-sm">`;
-                    });
-                    finalHtml += `</div>`;
-                }
-
-                finalHtml += `</div></div>`; // Close obs div and record wrapper
-            });
-
-            container.innerHTML = finalHtml;
+            if (itr.length === 0) { container.innerHTML = '<div class="w-full p-10 bg-white rounded-2xl border text-center text-slate-400 italic text-sm shadow-sm">Preencha o formulário para visualizar os dados.</div>'; return; }
+            container.innerHTML = itr.map((item, idx) => {
+                const label = item.isDraft ? (item.isEditing ? '<span class="text-blue-500 font-bold ml-1">(EDITANDO)</span>' : '<span class="text-amber-500 font-bold ml-1">(RASCUNHO)</span>') : '';
+                return `
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden w-full">
+                    <div class="bg-brand-50 text-[10px] font-black px-3 py-2.5 border-b border-slate-200 text-brand-700 uppercase text-center flex flex-col">
+                        <span>PLANTA #${idx+1} ${label}</span>
+                        <span class="text-slate-600 mt-0.5">ESTUFA ${item.greenhouse||'-'} / SETOR ${item.sector||'-'} / CICLO ${item.cycle||'-'}</span>
+                    </div>
+                    <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b text-slate-500 uppercase">1. IDENTIFICAÇÃO E PARÂMETROS</div>
+                    <div class="grid grid-cols-2 text-[11px]">
+                        <div class="bg-white font-bold text-slate-400 p-2 border-r border-b border-slate-100 uppercase">Variedade</div><div class="p-2 border-b border-slate-100 font-bold text-slate-800 bg-white">${item.variety||'---'}</div>
+                        <div class="bg-white font-bold text-slate-400 p-2 border-r border-b border-slate-100 uppercase">L. / Vaso</div><div class="p-2 border-b border-slate-100 font-bold text-slate-800 bg-white">${item.line||'-'} / ${item.pot||'-'}</div>
+                        <div class="col-span-2 flex border-b border-slate-200 bg-white"><div class="w-1/2 font-bold text-slate-400 p-2 border-r border-slate-100 uppercase">Altura da Planta</div><div class="w-1/2 p-2 font-black text-brand-600 text-[13px] text-center bg-brand-50/30">${item.height?item.height+' cm':'---'}</div></div>
+                    </div>
+                    <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b text-slate-500 uppercase">2. FRUTIFICAÇÃO E ABORTAMENTO</div>
+                    <table class="w-full text-[11px] text-center">
+                        <thead class="bg-white font-bold text-slate-400 text-[9px]"><tr><th class="border-b border-r py-1 w-[15%] uppercase">Folha</th><th class="border-b border-r py-1 w-[20%] uppercase text-brand-600">Frutos</th><th class="border-b border-r py-1 w-[20%] uppercase text-red-500">Abortos</th><th class="border-b py-1 w-[45%] uppercase">Motivo</th></tr></thead>
+                        <tbody>${(!item.fruits||item.fruits.length===0)?'<tr><td colspan="4" class="py-3 italic text-slate-400 text-[10px]">Sem dados.</td></tr>':item.fruits.map((f, i) => {
+                            const ab = Number(f.abortos)||0, fr = Number(f.frutos)||0;
+                            const pct = (ab>0 && fr>0) ? `<span class="inline-block text-red-600 text-[10px] font-black ml-1">${Math.round((ab/fr)*100)}%</span>` : '';
+                            return `<tr class="${i%2===0?'bg-slate-50/30':'bg-white'}"><td class="border-r border-b py-2 px-2 font-bold text-slate-700">${f.num||'-'}</td><td class="border-r border-b py-2 px-2 font-black text-brand-600">${f.frutos||'-'}</td><td class="border-r border-b py-2 px-2 font-black ${ab>0?'text-red-600':'text-slate-600'}">${f.abortos||'-'}</td><td class="border-b py-2 px-2 font-medium ${ab>0?'text-red-600':'text-slate-600'} text-[10px] text-left leading-tight"><div class="flex items-center justify-between w-full"><span>${f.motivo||'-'}</span>${pct}</div></td></tr>`;
+                        }).join('')}</tbody>
+                    </table>
+                    <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b text-slate-500 uppercase">3. TAMANHO DA FOLHA</div>
+                    <table class="w-full text-[11px] text-center">
+                        <thead class="bg-white font-bold text-slate-400 text-[9px]"><tr><th class="border-b border-r py-1 w-1/3 uppercase">Nº Folha</th><th class="border-b border-r py-1 w-1/3 uppercase">Compr.</th><th class="border-b py-1 w-1/3 uppercase">Largura</th></tr></thead>
+                        <tbody>${item.leaves.length===0?'<tr><td colspan="3" class="py-3 italic text-slate-400 text-[10px]">Sem dados.</td></tr>':item.leaves.map((l,i)=>`<tr class="${i%2===0?'bg-slate-50/30':'bg-white'}"><td class="border-r border-b py-2 px-2 font-bold text-slate-700">${l.num||'-'}</td><td class="border-r border-b py-2 px-2 font-bold text-slate-600">${l.comp?l.comp+' cm':'-'}</td><td class="border-b py-2 px-2 font-bold text-slate-600">${l.larg?l.larg+' cm':'-'}</td></tr>`).join('')}</tbody>
+                    </table>
+                    <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b text-slate-500 uppercase">4. MEDIÇÃO DAS HASTES</div>
+                    <table class="w-full text-[11px] text-center">
+                        <thead class="bg-white font-bold text-slate-400 text-[9px]"><tr><th class="border-b border-r py-1 w-1/2 uppercase">Nº Haste</th><th class="border-b py-1 w-1/2 uppercase">Comprimento</th></tr></thead>
+                        <tbody>${item.stems.length===0?'<tr><td colspan="2" class="py-3 italic text-slate-400 text-[10px]">Sem dados.</td></tr>':item.stems.map((s,i)=>`<tr class="${i%2===0?'bg-slate-50/30':'bg-white'}"><td class="border-r border-b py-2 px-2 font-bold text-slate-700">${s.num||'-'}</td><td class="border-b py-2 px-2 font-bold text-slate-600">${s.comp?s.comp+' cm':'-'}</td></tr>`).join('')}</tbody>
+                    </table>
+                    <div class="bg-slate-50 text-[10px] font-black px-3 py-2 border-b text-slate-500 uppercase">5. OBSERVAÇÕES E EVIDÊNCIAS</div>
+                    <div class="p-3 text-[10px] bg-white text-slate-600 font-medium leading-relaxed flex-1">${item.obs.trim()?`<div class="whitespace-pre-wrap">${item.obs}</div>`:'<span class="italic text-slate-400">Nenhuma observação.</span>'}${item.photos&&item.photos.length>0?`<div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t">${item.photos.map(p=>`<img src="${p}" class="w-full h-20 object-cover rounded-lg border shadow-sm">`).join('')}</div>`:''}</div>
+                </div>`;
+            }).join('');
         }
 
-        async function handleImageUpload(event) {
-            const files = Array.from(event.target.files);
-            if (!files.length) return;
-            if (currentPhotos.length + files.length > 4) { alert('Você pode enviar no máximo 4 fotos por planta.'); return; }
-            const uploadBtn = document.getElementById('photoUpload'); uploadBtn.disabled = true;
-            for (const file of files) { 
-                if (!file.type.startsWith('image/')) continue; 
-                const base64 = await processImage(file); currentPhotos.push(base64); 
-            }
-            uploadBtn.value = ''; uploadBtn.disabled = false;
-            renderPhotoPreviews(); updatePreview();
+        async function handleImageUpload(e) {
+            const fs = Array.from(e.target.files); if (!fs.length) return;
+            if (currentPhotos.length + fs.length > 4) { alert('Máx 4 fotos.'); return; }
+            for (const f of fs) if (f.type.startsWith('image/')) currentPhotos.push(await processImage(f));
+            e.target.value = ''; renderPhotoPreviews(); updatePreview();
         }
 
-        function processImage(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 1000; const MAX_HEIGHT = 1000;
-                        let width = img.width; let height = img.height;
-                        if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
-                        else { if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } }
-                        canvas.width = width; canvas.height = height;
-                        const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
-                        resolve(canvas.toDataURL('image/jpeg', 0.85));
-                    }
-                    img.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
+        function processImage(f) {
+            return new Promise(res => {
+                const r = new FileReader(); r.onload = ev => {
+                    const i = new Image(); i.onload = () => {
+                        const c = document.createElement('canvas'); const mw = 1000, mh = 1000;
+                        let w = i.width, h = i.height;
+                        if (w>h) { if(w>mw){h*=mw/w; w=mw;} } else { if(h>mh){w*=mh/h; h=mh;} }
+                        c.width = w; c.height = h; c.getContext('2d').drawImage(i, 0, 0, w, h);
+                        res(c.toDataURL('image/jpeg', 0.85));
+                    }; i.src = ev.target.result;
+                }; r.readAsDataURL(f);
             });
         }
 
         function renderPhotoPreviews() {
-            const container = document.getElementById('photoPreviewContainer');
+            const c = document.getElementById('photoPreviewContainer');
             document.getElementById('photoCounter').innerText = `${currentPhotos.length}/4`;
-            if (currentPhotos.length === 0) { container.classList.add('hidden'); container.innerHTML = ''; return; }
-            container.classList.remove('hidden');
-            container.innerHTML = currentPhotos.map((photo, index) => `
-                <div class="relative inline-block w-full">
-                    <img src="${photo}" class="w-full h-16 object-cover rounded-lg border border-slate-200 shadow-sm">
-                    <button type="button" onclick="removePhoto(${index})" class="absolute -top-2 -right-2 bg-white border border-slate-200 text-red-500 rounded-full p-0.5 shadow-md">
-                        <i data-lucide="x" class="w-3 h-3"></i>
-                    </button>
-                </div>
-            `).join('');
+            if (!currentPhotos.length) { c.classList.add('hidden'); c.innerHTML = ''; return; }
+            c.classList.remove('hidden');
+            c.innerHTML = currentPhotos.map((p, i) => `<div class="relative"><img src="${p}" class="w-full h-16 object-cover rounded-lg border shadow-sm"><button type="button" onclick="removePhoto(${i})" class="absolute -top-2 -right-2 bg-white text-red-500 rounded-full p-0.5 shadow-md"><i data-lucide="x" class="w-3 h-3"></i></button></div>`).join('');
             lucide.createIcons();
         }
 
-        function removePhoto(index) { currentPhotos.splice(index, 1); renderPhotoPreviews(); updatePreview(); }
+        function removePhoto(i) { currentPhotos.splice(i, 1); renderPhotoPreviews(); updatePreview(); }
 
         function addLeafRow() {
-            leafCount++;
-            const container = document.getElementById('leavesContainer');
-            const newRow = document.createElement('div');
-            newRow.className = 'flex gap-2 items-center animate-fade-in-down group';
-            newRow.innerHTML = `
-                <input type="text" id="leaf${leafCount}_num" placeholder="Nº Folha" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                <input type="number" step="0.01" id="leaf${leafCount}_comp" placeholder="Comp. (cm)" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                <input type="number" step="0.01" id="leaf${leafCount}_larg" placeholder="Larg. (cm)" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                <button type="button" onclick="this.parentElement.remove(); updatePreview();" class="shrink-0 text-slate-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-50 group-hover:opacity-100" title="Remover">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            `;
-            container.appendChild(newRow);
-            lucide.createIcons();
+            leafCount++; const c = document.getElementById('leavesContainer'); const n = document.createElement('div');
+            n.className = 'flex gap-2 items-center animate-fade-in-down group';
+            n.innerHTML = `<input type="text" id="leaf${leafCount}_num" placeholder="Nº Folha" oninput="updatePreview()" class="flex-1 p-2 border rounded-lg text-sm outline-none"><input type="number" step="0.01" id="leaf${leafCount}_comp" placeholder="Comp. (cm)" oninput="updatePreview()" class="flex-1 p-2 border rounded-lg text-sm outline-none"><input type="number" step="0.01" id="leaf${leafCount}_larg" placeholder="Larg. (cm)" oninput="updatePreview()" class="flex-1 p-2 border rounded-lg text-sm outline-none"><button type="button" onclick="this.parentElement.remove(); updatePreview();" class="shrink-0 text-slate-400 hover:text-red-500 p-2 opacity-50 group-hover:opacity-100"><i data-lucide="x" class="w-4 h-4"></i></button>`;
+            c.appendChild(n); lucide.createIcons();
         }
 
         function addStemRow() {
-            stemCount++;
-            const container = document.getElementById('stemsContainer');
-            const newRow = document.createElement('div');
-            newRow.className = 'flex gap-2 items-center animate-fade-in-down group';
-            newRow.innerHTML = `
-                <input type="text" id="stem${stemCount}_num" placeholder="Nº Haste" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                <input type="number" step="0.01" id="stem${stemCount}_comp" placeholder="Comprimento (cm)" oninput="updatePreview()" class="flex-1 min-w-0 p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                <button type="button" onclick="this.parentElement.remove(); updatePreview();" class="shrink-0 text-slate-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-50 group-hover:opacity-100" title="Remover">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            `;
-            container.appendChild(newRow);
-            lucide.createIcons();
+            stemCount++; const c = document.getElementById('stemsContainer'); const n = document.createElement('div');
+            n.className = 'flex gap-2 items-center animate-fade-in-down group';
+            n.innerHTML = `<input type="text" id="stem${stemCount}_num" placeholder="Nº Haste" oninput="updatePreview()" class="flex-1 p-2 border rounded-lg text-sm outline-none"><input type="number" step="0.01" id="stem${stemCount}_comp" placeholder="Comprimento (cm)" oninput="updatePreview()" class="flex-1 p-2 border rounded-lg text-sm outline-none"><button type="button" onclick="this.parentElement.remove(); updatePreview();" class="shrink-0 text-slate-400 hover:text-red-500 p-2 opacity-50 group-hover:opacity-100"><i data-lucide="x" class="w-4 h-4"></i></button>`;
+            c.appendChild(n); lucide.createIcons();
+        }
+
+        function addFruitRow() {
+            fruitCount++; const c = document.getElementById('fruitsContainer'); const n = document.createElement('div');
+            n.className = 'flex flex-wrap sm:flex-nowrap gap-2 items-center animate-fade-in-down group';
+            n.innerHTML = `<input type="text" id="fruit${fruitCount}_num" placeholder="Nº Folha" oninput="updatePreview()" class="w-full sm:w-20 p-2 border rounded-lg text-sm outline-none"><input type="number" id="fruit${fruitCount}_frutos" placeholder="Frutos" min="0" oninput="updatePreview()" class="flex-1 p-2 border rounded-lg text-sm outline-none"><input type="number" id="fruit${fruitCount}_abortos" placeholder="Abortos" min="0" oninput="updatePreview()" class="flex-1 p-2 border rounded-lg text-sm outline-none"><input type="text" id="fruit${fruitCount}_motivo" placeholder="Motivo" oninput="updatePreview()" class="w-full sm:flex-1 p-2 border rounded-lg text-sm outline-none"><button type="button" onclick="this.parentElement.remove(); updatePreview();" class="shrink-0 text-slate-400 hover:text-red-500 p-2 opacity-50 group-hover:opacity-100 hidden sm:block"><i data-lucide="x" class="w-4 h-4"></i></button><button type="button" onclick="this.parentElement.remove(); updatePreview();" class="w-full sm:hidden text-red-500 p-2 bg-red-50 rounded-lg text-xs font-bold mt-1 uppercase">Remover Linha</button>`;
+            c.appendChild(n); lucide.createIcons();
         }
 
         function confirmBeforeSend() {
-            // Se houver rascunho preenchido e não guardado, avisamos ou auto-guardamos
-            const draftGreenhouse = document.getElementById('greenhouse') ? document.getElementById('greenhouse').value : '';
-            const draftSector = document.getElementById('sector').value;
-            
-            if (editingIndex === -1 && (draftGreenhouse || draftSector)) {
-                const form = document.getElementById('checklistForm');
-                if (!form.checkValidity()) { 
-                    alert("Você tem itens no formulário que ainda não foram adicionados à lista. Preencha os campos obrigatórios e clique em 'Adicionar ao Relatório'.");
-                    return; 
-                } else {
-                    addRecord(); // Auto adiciona o que estiver pronto
-                }
-            } else if (editingIndex !== -1) {
-                alert("Você está editando uma planta. Por favor, clique em 'Salvar Alterações' antes de enviar o relatório.");
-                return;
-            }
-
-            if(records.length === 0) {
-                alert("Nenhuma planta foi adicionada ao relatório. Preencha e adicione os itens primeiro.");
-                return;
-            }
-
+            if (editingIndex===-1 && (document.getElementById('greenhouse').value||document.getElementById('sector').value)) {
+                if(!document.getElementById('checklistForm').checkValidity()){alert('Preencha os obrigatórios.'); return;} else addRecord();
+            } else if(editingIndex!==-1){alert('Salve as alterações primeiro.'); return;}
+            if(!records.length){alert('Sem itens.'); return;}
             document.getElementById('confirmModal').classList.remove('hidden'); 
         }
 
         function hideConfirmModal() { document.getElementById('confirmModal').classList.add('hidden'); }
-        
         function executeSend() { hideConfirmModal(); processAndSave(); }
 
         let preparedShareData = null;
 
-        // Função para calcular o número da semana
-        function getWeekNumber(d) {
-            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-            var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-        }
-
         async function processAndSave() {
             document.getElementById('loadingModal').classList.remove('hidden');
-            
             try {
-                const element = document.getElementById('export-wrapper');
-                const images = element.querySelectorAll('img');
-                await Promise.all(Array.from(images).map(img => { 
-                    if (img.complete) return Promise.resolve(); 
-                    return new Promise(resolve => { img.onload = resolve; img.onerror = resolve; }); 
-                }));
-                
-                const canvas = await html2canvas(element, { 
-                    scale: 4, 
-                    useCORS: true, 
-                    scrollY: -window.scrollY, 
-                    backgroundColor: '#f0f2f5',
-                    onclone: (doc) => {
-                        doc.documentElement.style.fontSize = '24px'; 
-                        const wrapper = doc.getElementById('export-wrapper');
-                        if (wrapper) { 
-                            wrapper.style.width = '1200px'; 
-                            wrapper.style.maxWidth = '1200px'; 
-                            wrapper.style.minWidth = '1200px'; 
-                            wrapper.style.height = 'auto'; 
-                            wrapper.style.margin = '0';
-                            wrapper.style.padding = '30px'; 
-                            wrapper.style.borderRadius = '0'; 
-                        }
-                        const itemsContainer = doc.getElementById('previewItemsContainer');
-                        if (itemsContainer) {
-                            itemsContainer.style.display = 'grid';
-                            itemsContainer.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
-                            itemsContainer.style.gap = '16px';
-                            itemsContainer.style.alignItems = 'start';
-                        }
+                const el = document.getElementById('export-wrapper');
+                await Promise.all(Array.from(el.querySelectorAll('img')).map(i => i.complete?Promise.resolve():new Promise(r=>{i.onload=r;i.onerror=r;})));
+                const canvas = await html2canvas(el, { scale:4, useCORS:true, scrollY:-window.scrollY, backgroundColor:'#f0f2f5', onclone: d => {
+                    const w = d.getElementById('export-wrapper'); w.style.width='1200px'; w.style.maxWidth='1200px'; w.style.padding='30px'; w.style.borderRadius='0';
+                    const ic = d.getElementById('previewItemsContainer'); ic.style.display='grid'; ic.style.gridTemplateColumns='repeat(3, 1fr)'; ic.style.gap='16px';
+                }});
+                const dv = document.getElementById('reportDate').value; const dobj = new Date(dv+"T00:00:00"); const ds = dobj.toLocaleDateString('pt-BR');
+                const pl = []; records.forEach(rec => {
+                    const max = Math.max(rec.leaves.length, rec.stems.length, rec.fruits.length);
+                    for(let i=0; i<max||i===0; i++) {
+                        const l=rec.leaves[i]||{}, s=rec.stems[i]||{}, f=rec.fruits[i]||{};
+                        pl.push({ date:ds, time:new Date().toLocaleTimeString('pt-BR'), greenhouse:rec.greenhouse, sector:rec.sector, cycle:rec.cycle, variety:rec.variety, line:rec.line, pot:rec.pot, height:rec.height, leafNum:l.num||"", leafComp:l.comp||"", leafLarg:l.larg||"", stemNum:s.num||"", stemComp:s.comp||"", frutoFolha:f.num||"", frutos:f.frutos||"", abortos:f.abortos||"", motivoAborto:f.motivo||"", observations:i===0?rec.obs:"" });
                     }
                 });
-
-                const dateVal = document.getElementById('reportDate').value;
-                const dateObj = new Date(dateVal + "T00:00:00");
-                const dateStr = dateObj.toLocaleDateString('pt-BR');
-                const currentTime = new Date().toLocaleTimeString('pt-BR');
-                
-                // Saudação automática
-                const now = new Date();
-                const hours = now.getHours();
-                let greeting = "Bom dia";
-                if (hours >= 12 && hours < 18) greeting = "Boa tarde";
-                else if (hours >= 18) greeting = "Boa noite";
-                
-                const weekNum = getWeekNumber(dateObj);
-                
-                // Texto simplificado para o WhatsApp
-                let shareText = `${greeting}!\nResumo Desenvolvimento do Pepino - ${dateStr} - S${weekNum}`;
-                
-                let payload = []; // Todas as linhas para a planilha
-
-                records.forEach((rec, index) => {
-                    // GERAR LINHAS PARA A PLANILHA (para este recorde específico)
-                    const maxRows = Math.max(rec.leaves.length, rec.stems.length);
-                    for (let i = 0; i < maxRows || i === 0; i++) { // Roda pelo menos 1 vez mesmo sem folhas/hastes
-                        const l = rec.leaves[i] || {};
-                        const s = rec.stems[i] || {};
-                        
-                        payload.push({
-                            date: dateStr,
-                            time: currentTime,
-                            greenhouse: rec.greenhouse,
-                            sector: rec.sector,
-                            cycle: rec.cycle,
-                            variety: rec.variety,
-                            line: rec.line,
-                            pot: rec.pot,
-                            height: rec.height,
-                            leafNum: l.num || "",
-                            leafComp: l.comp || "",
-                            leafLarg: l.larg || "",
-                            stemNum: s.num || "",
-                            stemComp: s.comp || "",
-                            observations: i === 0 ? rec.obs : "" // Obs apenas na primeira linha da planta
-                        });
-                    }
-                });
-
-                // Dispara o script com todas as plantas acumuladas
-                sendDataToGoogleSheets(payload);
-
-                // O nome do ficheiro baseia-se na primeira planta recolhida (ou num nome genérico)
-                const firstSector = records.length > 0 ? records[0].sector : 'Geral';
-                const filename = `Biometria_Pepino_S${firstSector}_${dateStr.replace(/\//g, '-')}.png`;
-                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-                const file = new File([blob], filename, { type: 'image/png' });
-
-                preparedShareData = {
-                    file: file, filename: filename, shareText: shareText, dataUrl: canvas.toDataURL('image/png')
-                };
-
-                document.getElementById('loadingModal').classList.add('hidden');
-                document.getElementById('successModal').classList.remove('hidden');
-
-            } catch (err) { 
-                console.error(err);
-                document.getElementById('loadingModal').classList.add('hidden');
-                alert('Falha ao processar os dados.'); 
-            }
+                sendDataToGoogleSheets(pl);
+                const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+                preparedShareData = { file: new File([blob], `Biometria_${ds.replace(/\//g,'-')}.png`, {type:'image/png'}), shareText: `Biometria Pepino - ${ds}`, dataUrl: canvas.toDataURL('image/png') };
+                document.getElementById('loadingModal').classList.add('hidden'); document.getElementById('successModal').classList.remove('hidden');
+            } catch(e) { document.getElementById('loadingModal').classList.add('hidden'); alert('Erro.'); }
         }
 
         async function executeShare() {
-            if (!preparedShareData) return;
-            const { file, filename, shareText, dataUrl } = preparedShareData;
-            
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) { 
-                try {
-                    await navigator.share({ files: [file], title: filename, text: shareText }); 
-                    hideSuccessModal();
-                } catch (err) { console.log(err); }
-            } else { 
-                const link = document.createElement('a'); 
-                link.href = dataUrl; link.download = filename; 
-                document.body.appendChild(link); link.click(); document.body.removeChild(link); 
-                setTimeout(() => { 
-                    window.open(`https://web.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank'); 
-                    hideSuccessModal();
-                }, 1500); 
-            }
+            const { file, shareText, dataUrl } = preparedShareData;
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) { try { await navigator.share({ files: [file], text: shareText }); hideSuccessModal(); } catch(e){} }
+            else { const l = document.createElement('a'); l.href = dataUrl; l.download = file.name; l.click(); setTimeout(() => { window.open(`https://web.whatsapp.com/send?text=${encodeURIComponent(shareText)}`,'_blank'); hideSuccessModal(); }, 1500); }
         }
 
         function hideSuccessModal() { document.getElementById('successModal').classList.add('hidden'); }
 
-        async function sendDataToGoogleSheets(payload) {
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw9OdMAikCYB5vvURBAG2Ok_EZyX3k66HSkNQOgowbt1Bpz4KkPn1AyDIRvF3h9mdsq/exec"; 
-            if (SCRIPT_URL === "SUA_URL_DO_APPS_SCRIPT_AQUI") return;
-            try { 
-                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }); 
-            } catch (err) { console.error(err); }
+        async function sendDataToGoogleSheets(pl) {
+            const url = "https://script.google.com/macros/s/AKfycbw9OdMAikCYB5vvURBAG2Ok_EZyX3k66HSkNQOgowbt1Bpz4KkPn1AyDIRvF3h9mdsq/exec";
+            try { await fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify(pl) }); } catch(e){}
         }
 
-        // ==========================================
-        // LÓGICA DO DASHBOARD (GRÁFICOS)
-        // ==========================================
-
         async function loadDashboardData() {
-            document.getElementById('dashCharts').classList.add('hidden');
-            document.getElementById('dashKPIs').classList.add('hidden');
-            document.getElementById('syncOverlay').classList.remove('hidden');
-
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw9OdMAikCYB5vvURBAG2Ok_EZyX3k66HSkNQOgowbt1Bpz4KkPn1AyDIRvF3h9mdsq/exec";
-
-            try {
-                // Tenta buscar os dados reais do Google Sheets
-                const response = await fetch(SCRIPT_URL + "?action=getDados");
-                if (response.ok) {
-                    dashboardRawData = await response.json();
-                } else {
-                    throw new Error("Falha na resposta do servidor");
-                }
-            } catch (error) {
-                console.warn("Usando dados de demonstração (Mock)", error);
-                // Dados de demonstração caso o script ainda não retorne dados no GET
-                dashboardRawData = generateMockData(); 
-            }
-
-            // Atualiza os filtros dinamicamente com base nos dados que chegaram
+            document.getElementById('dashCharts').classList.add('hidden'); document.getElementById('dashKPIs').classList.add('hidden'); document.getElementById('syncOverlay').classList.remove('hidden');
+            const url = "https://script.google.com/macros/s/AKfycbw9OdMAikCYB5vvURBAG2Ok_EZyX3k66HSkNQOgowbt1Bpz4KkPn1AyDIRvF3h9mdsq/exec";
+            try { const res = await fetch(url + "?action=getDados"); if(res.ok) dashboardRawData = await res.json(); else throw new Error(); } 
+            catch(e) { console.warn("Mock Data"); dashboardRawData = generateMockData(); }
             populateDynamicFilters(dashboardRawData);
-
             filterDashboard();
-            
-            document.getElementById('syncOverlay').classList.add('hidden');
-            document.getElementById('dashKPIs').classList.remove('hidden');
-            document.getElementById('dashCharts').classList.remove('hidden');
+            document.getElementById('syncOverlay').classList.add('hidden'); document.getElementById('dashKPIs').classList.remove('hidden'); document.getElementById('dashCharts').classList.remove('hidden');
         }
 
         function populateDynamicFilters(data) {
-            const dashCiclo = document.getElementById('dashCiclo');
-            const currentValue = dashCiclo.value;
+            const de = document.getElementById('dashEstufa'), ds = document.getElementById('dashSetor'), dc = document.getElementById('dashCiclo');
+            const ve = de.value, vs = ds.value, vc = dc.value;
 
-            // Extrair todos os ciclos únicos da planilha, removendo vazios e ordenando numericamente
-            const uniqueCycles = [...new Set(data.map(item => String(item.cycle || '').trim()))]
-                .filter(c => c !== '')
-                .sort((a, b) => a.localeCompare(b, undefined, {numeric: true}));
+            const ue = [...new Set(data.map(i => String(i.greenhouse||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+            const us = [...new Set(data.map(i => String(i.sector||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+            const uc = [...new Set(data.map(i => String(i.cycle||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
 
-            // Montar o HTML do select
-            let optionsHtml = '<option value="TODOS">Todos os Ciclos</option>';
-            uniqueCycles.forEach(c => {
-                optionsHtml += `<option value="${c}">Ciclo ${c}</option>`;
-            });
+            de.innerHTML = '<option value="TODAS">Todas as Estufas</option>' + ue.map(x=>`<option value="${x}">Estufa ${x}</option>`).join('');
+            ds.innerHTML = '<option value="TODOS">Todos os Setores</option>' + us.map(x=>`<option value="${x}">Setor ${x}</option>`).join('');
+            dc.innerHTML = '<option value="TODOS">Todos os Ciclos</option>' + uc.map(x=>`<option value="${x}">Ciclo ${x}</option>`).join('');
 
-            dashCiclo.innerHTML = optionsHtml;
-
-            // Tenta manter o ciclo que estava selecionado antes (se ele ainda existir nos dados)
-            if (uniqueCycles.includes(currentValue) || currentValue === 'TODOS') {
-                dashCiclo.value = currentValue;
-            } else {
-                dashCiclo.value = 'TODOS';
-            }
+            de.value = ue.includes(ve)?ve:'TODAS'; ds.value = us.includes(vs)?vs:'TODOS'; dc.value = uc.includes(vc)?vc:'TODOS';
         }
         
         function resetDashboardFilters() {
-            document.getElementById('dashDataInicio').value = '';
-            document.getElementById('dashDataFim').value = '';
-            document.getElementById('dashEstufa').value = 'TODAS';
-            document.getElementById('dashSetor').value = 'TODOS';
-            document.getElementById('dashCiclo').value = 'TODOS';
-            document.getElementById('dashTempo').value = 'DIA';
-            document.getElementById('dashCompare').value = 'SIMPLES';
+            document.getElementById('dashDataInicio').value = ''; document.getElementById('dashDataFim').value = ''; document.getElementById('dashEstufa').value = 'TODAS'; document.getElementById('dashSetor').value = 'TODOS'; document.getElementById('dashCiclo').value = 'TODOS'; document.getElementById('dashTempo').value = 'DIA'; document.getElementById('dashCompare').value = 'SIMPLES';
             filterDashboard();
         }
 
-        function filterDashboard() {
-            if (!dashboardRawData || dashboardRawData.length === 0) return;
-            processAndRenderCharts(dashboardRawData);
-        }
+        function filterDashboard() { if (dashboardRawData.length) processAndRenderCharts(dashboardRawData); }
 
         function processAndRenderCharts(data) {
-            const dateStartVal = document.getElementById('dashDataInicio').value;
-            const dateEndVal = document.getElementById('dashDataFim').value;
-            const filterEstufa = document.getElementById('dashEstufa').value;
-            const filterSetor = document.getElementById('dashSetor').value;
-            const filterCiclo = document.getElementById('dashCiclo').value;
-            const timeMode = document.getElementById('dashTempo').value;
-            const compareMode = document.getElementById('dashCompare').value;
-
-            let dateStart = dateStartVal ? new Date(dateStartVal + 'T00:00:00') : null;
-            let dateEnd = dateEndVal ? new Date(dateEndVal + 'T23:59:59') : null;
-
-            // Paleta de Cores Profissional para Comparações
-            const palette = [
-                { border: '#3b82f6', bg: 'rgba(59, 130, 246, 0.15)' }, // Azul
-                { border: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)' }, // Laranja
-                { border: '#10b981', bg: 'rgba(16, 185, 129, 0.15)' }, // Verde
-                { border: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.15)' }, // Roxo
-                { border: '#f43f5e', bg: 'rgba(244, 63, 94, 0.15)' },  // Rosa
-                { border: '#06b6d4', bg: 'rgba(6, 182, 212, 0.15)' }   // Ciano
-            ];
-
-            // 1. Filtrar Dados Baseado no Período e no Modo de Comparação
-            let filtered = data.filter(row => {
-                if (!row.date) return false;
-
-                // Filtrar por Datas (se selecionadas)
-                if (dateStart || dateEnd) {
-                    const parts = row.date.split('/');
-                    if (parts.length === 3) {
-                        const rowDate = new Date(parts[2], parts[1]-1, parts[0]);
-                        if (dateStart && rowDate < dateStart) return false;
-                        if (dateEnd && rowDate > dateEnd) return false;
-                    }
-                }
-
-                // Filtrar por Localização
-                if (compareMode === 'SIMPLES') {
-                    if (filterEstufa !== 'TODAS' && String(row.greenhouse) !== filterEstufa) return false;
-                    if (filterSetor !== 'TODOS' && String(row.sector) !== filterSetor) return false;
-                    if (filterCiclo !== 'TODOS' && String(row.cycle) !== filterCiclo) return false;
-                } else if (compareMode === 'ESTUFA') {
-                    // Se compara estufas, ignora o filtro da estufa (mostra todas), mas respeita o de setor e ciclo
-                    if (filterSetor !== 'TODOS' && String(row.sector) !== filterSetor) return false;
-                    if (filterCiclo !== 'TODOS' && String(row.cycle) !== filterCiclo) return false;
-                } else if (compareMode === 'SETOR') {
-                    // Se compara setores, ignora o filtro de setor, mas respeita o de estufa e ciclo
-                    if (filterEstufa !== 'TODAS' && String(row.greenhouse) !== filterEstufa) return false;
-                    if (filterCiclo !== 'TODOS' && String(row.cycle) !== filterCiclo) return false;
-                } else if (compareMode === 'VARIEDADE') {
-                    // Se compara variedades, respeita todos os filtros de localização
-                    if (filterEstufa !== 'TODAS' && String(row.greenhouse) !== filterEstufa) return false;
-                    if (filterSetor !== 'TODOS' && String(row.sector) !== filterSetor) return false;
-                    if (filterCiclo !== 'TODOS' && String(row.cycle) !== filterCiclo) return false;
-                }
+            const dsv = document.getElementById('dashDataInicio').value, dev = document.getElementById('dashDataFim').value, fe = document.getElementById('dashEstufa').value, fs = document.getElementById('dashSetor').value, fc = document.getElementById('dashCiclo').value, tm = document.getElementById('dashTempo').value, cm = document.getElementById('dashCompare').value;
+            let ds = dsv?new Date(dsv+'T00:00:00'):null, de = dev?new Date(dev+'T23:59:59'):null;
+            const pal = [{border:'#3b82f6',bg:'rgba(59,130,246,0.15)'},{border:'#f59e0b',bg:'rgba(245,158,11,0.15)'},{border:'#10b981',bg:'rgba(16,185,129,0.15)'},{border:'#8b5cf6',bg:'rgba(139,92,246,0.15)'},{border:'#f43f5e',bg:'rgba(244,63,94,0.15)'}];
+            let filtered = data.filter(r => {
+                if(!r.date) return false;
+                if(ds||de){const dp=r.date.split('/');const rd=new Date(dp[2],dp[1]-1,dp[0]); if(ds&&rd<ds)return false; if(de&&rd>de)return false;}
+                if(cm==='SIMPLES'){if(fe!=='TODAS'&&String(r.greenhouse)!==fe)return false; if(fs!=='TODOS'&&String(r.sector)!==fs)return false; if(fc!=='TODOS'&&String(r.cycle)!==fc)return false;}
+                else if(cm==='ESTUFA'){if(fs!=='TODOS'&&String(r.sector)!==fs)return false; if(fc!=='TODOS'&&String(r.cycle)!==fc)return false;}
+                else if(cm==='SETOR'){if(fe!=='TODAS'&&String(r.greenhouse)!==fe)return false; if(fc!=='TODOS'&&String(r.cycle)!==fc)return false;}
+                else if(cm==='VARIEDADE'||cm==='FOLHA'){if(fe!=='TODAS'&&String(r.greenhouse)!==fe)return false; if(fs!=='TODOS'&&String(r.sector)!==fs)return false; if(fc!=='TODOS'&&String(r.cycle)!==fc)return false;}
                 return true;
             });
-
-            // Variáveis para KPIs Globais
-            let totalHeight = 0, countHeight = 0;
-            let totalLeaf = 0, countLeaf = 0;
-            let totalStem = 0, countStem = 0;
-
-            // Nomes dos meses para o modo "Mensal"
-            const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-
-            // 2. Agrupar Dados
-            const grouped = {}; 
-            const timeLabelsMap = {}; 
-
-            filtered.forEach(row => {
-                const parts = row.date.split('/');
-                if (parts.length < 3) return;
-                const d = parseInt(parts[0], 10);
-                const m = parseInt(parts[1], 10);
-                const y = parseInt(parts[2], 10);
-                const dateObj = new Date(y, m - 1, d);
-
-                // Definir a chave de Tempo
-                let timeKey, displayLabel;
-                if (timeMode === 'SEMANA') {
-                    const w = getWeekNumber(dateObj);
-                    timeKey = `${y}-W${String(w).padStart(2, '0')}`;
-                    displayLabel = `Semana ${w}`;
-                } else if (timeMode === 'MES') {
-                    timeKey = `${y}-${String(m).padStart(2, '0')}`;
-                    displayLabel = `${monthNames[m-1]} ${y}`;
-                } else if (timeMode === 'ANO') {
-                    timeKey = `${y}`;
-                    displayLabel = `${y}`;
+            let th=0, ch=0, tl=0, cl=0, ts=0, cs=0, tf=0, ta=0, mm={};
+            const g={}, tlm={}, mn=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+            filtered.forEach(r => {
+                const dp=r.date.split('/'); const dobj=new Date(dp[2],dp[1]-1,dp[0]);
+                let tk, dl;
+                if(tm==='SEMANA'){const w=getWeekNumber(dobj); tk=`${dp[2]}-W${String(w).padStart(2,'0')}`; dl=`Semana ${w}`;}
+                else if(tm==='MES'){tk=`${dp[2]}-${dp[1]}`; dl=`${mn[parseInt(dp[1])-1]} ${dp[2]}`;}
+                else if(tm==='ANO'){tk=dp[2]; dl=dp[2];}
+                else{tk=`${dp[2]}-${dp[1]}-${dp[0]}`; dl=`${dp[0]}/${dp[1]}`;}
+                let ek='Geral'; if(cm==='ESTUFA') ek=`Estufa ${r.greenhouse||'?'}`; if(cm==='SETOR') ek=`Setor ${r.sector||'?'}`; if(cm==='VARIEDADE') ek=r.variety||'Outra'; if(cm==='FOLHA') ek=`Folha ${r.frutoFolha||'?'}`;
+                if(!g[tk]){g[tk]={}; tlm[tk]=dl;} if(!g[tk][ek])g[tk][ek]={h:[],lc:[],ll:[],sc:[],f:[],a:[]};
+                if(r.height&&!isNaN(parseFloat(r.height))){const v=parseFloat(r.height); g[tk][ek].h.push(v); th+=v; ch++;}
+                if(r.leafComp&&!isNaN(parseFloat(r.leafComp))){const v=parseFloat(r.leafComp); g[tk][ek].lc.push(v); tl+=v; cl++;}
+                if(r.leafLarg&&!isNaN(parseFloat(r.leafLarg))) g[tk][ek].ll.push(parseFloat(r.leafLarg));
+                if(r.stemComp&&!isNaN(parseFloat(r.stemComp))){const v=parseFloat(r.stemComp); g[tk][ek].sc.push(v); ts+=v; cs++;}
+                if(r.frutos&&!isNaN(parseFloat(r.frutos))){const v=parseFloat(r.frutos); g[tk][ek].f.push(v); tf+=v;}
+                if(r.abortos&&!isNaN(parseFloat(r.abortos))){const v=parseFloat(r.abortos); g[tk][ek].a.push(v); if(v>0){ta+=v; const rm=r.motivoAborto?r.motivoAborto.trim():''; const m=rm?(rm.charAt(0).toUpperCase()+rm.slice(1).toLowerCase()):'Não informado'; mm[m]=(mm[m]||0)+v;}}
+            });
+            document.getElementById('kpiAltura').innerText=ch>0?(th/ch).toFixed(1)+' cm':'-- cm'; document.getElementById('kpiFolha').innerText=cl>0?(tl/cl).toFixed(1)+' cm':'-- cm'; document.getElementById('kpiHaste').innerText=cs>0?(ts/cs).toFixed(1)+' cm':'-- cm';
+            const tgf=tf+ta; if(tgf>0){document.getElementById('kpiAproveitado').innerText=Math.round((tf/tgf)*100)+'%'; document.getElementById('kpiAbortado').innerText=Math.round((ta/tgf)*100)+'%';} else {document.getElementById('kpiAproveitado').innerText='--%'; document.getElementById('kpiAbortado').innerText='--%';}
+            const stk=Object.keys(g).sort(); const lbls=stk.map(k=>tlm[k]); const es=new Set(); stk.forEach(tk=>Object.keys(g[tk]).forEach(e=>es.add(e))); const el=Array.from(es).sort();
+            const hds=[], sds=[], lds=[], fds=[];
+            el.forEach((ent, idx) => {
+                const c=pal[idx%pal.length];
+                const dh=stk.map(tk=>{const a=g[tk][ent]?.h; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                const dsc=stk.map(tk=>{const a=g[tk][ent]?.sc; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                const dlc=stk.map(tk=>{const a=g[tk][ent]?.lc; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                const df=stk.map(tk=>{const a=g[tk][ent]?.f; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                const da=stk.map(tk=>{const a=g[tk][ent]?.a; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                hds.push({label:ent==='Geral'?'Altura (cm)':ent, data:dh, borderColor:c.border, backgroundColor:cm==='SIMPLES'?c.bg:'transparent', borderWidth:3, fill:cm==='SIMPLES', tension:0.4});
+                sds.push({label:ent==='Geral'?'Haste (cm)':ent, data:dsc, borderColor:cm==='SIMPLES'?'#f59e0b':c.border, backgroundColor:cm==='SIMPLES'?'rgba(245,158,11,0.15)':'transparent', borderWidth:3, fill:cm==='SIMPLES', tension:0.4});
+                if(cm==='SIMPLES'){
+                    const dll=stk.map(tk=>{const a=g[tk][ent]?.ll; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                    lds.push({label:'Comprimento (cm)', data:dlc, backgroundColor:'#10b981', borderColor:'#10b981', borderWidth:2, borderRadius:6});
+                    lds.push({label:'Largura (cm)', data:dll, backgroundColor:'#6ee7b7', borderColor:'#6ee7b7', borderWidth:2, borderRadius:6});
+                    fds.push({label:'Frutos', data:df, backgroundColor:'#f97316', borderColor:'#f97316', borderWidth:2, borderRadius:6});
+                    fds.push({label:'Abortos', data:da, backgroundColor:'#ef4444', borderColor:'#ef4444', borderWidth:2, borderRadius:6});
                 } else {
-                    timeKey = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-                    displayLabel = `${String(d).padStart(2, '0')}/${String(m).padStart(2, '0')}`;
-                }
-
-                // Definir a chave da Entidade (Geral, Estufa X ou Setor Y)
-                let entityKey = 'Geral';
-                if (compareMode === 'ESTUFA') entityKey = `Estufa ${row.greenhouse || 'N/A'}`;
-                if (compareMode === 'SETOR') entityKey = `Setor ${row.sector || 'N/A'}`;
-                if (compareMode === 'VARIEDADE') entityKey = `${row.variety || 'Desconhecida'}`;
-
-                // Estruturar dados
-                if (!grouped[timeKey]) {
-                    grouped[timeKey] = {};
-                    timeLabelsMap[timeKey] = displayLabel;
-                }
-                if (!grouped[timeKey][entityKey]) {
-                    grouped[timeKey][entityKey] = { h: [], lc: [], ll: [], sc: [] };
-                }
-                
-                // Extração e KPIs
-                if (row.height && !isNaN(parseFloat(row.height))) {
-                    const val = parseFloat(row.height);
-                    grouped[timeKey][entityKey].h.push(val);
-                    totalHeight += val; countHeight++;
-                }
-                if (row.leafComp && !isNaN(parseFloat(row.leafComp))) {
-                    const val = parseFloat(row.leafComp);
-                    grouped[timeKey][entityKey].lc.push(val);
-                    totalLeaf += val; countLeaf++;
-                }
-                if (row.leafLarg && !isNaN(parseFloat(row.leafLarg))) {
-                    grouped[timeKey][entityKey].ll.push(parseFloat(row.leafLarg));
-                }
-                if (row.stemComp && !isNaN(parseFloat(row.stemComp))) {
-                    const val = parseFloat(row.stemComp);
-                    grouped[timeKey][entityKey].sc.push(val);
-                    totalStem += val; countStem++;
+                    lds.push({label:ent, data:dlc, backgroundColor:c.border, borderColor:c.border, borderWidth:2, borderRadius:6});
+                    fds.push({label:ent+' (Frutos)', data:df, backgroundColor:c.border, borderColor:c.border, borderWidth:2, borderRadius:6});
                 }
             });
-
-            // Atualizar KPIs
-            document.getElementById('kpiAltura').innerText = countHeight > 0 ? (totalHeight / countHeight).toFixed(1) + ' cm' : '-- cm';
-            document.getElementById('kpiFolha').innerText = countLeaf > 0 ? (totalLeaf / countLeaf).toFixed(1) + ' cm' : '-- cm';
-            document.getElementById('kpiHaste').innerText = countStem > 0 ? (totalStem / countStem).toFixed(1) + ' cm' : '-- cm';
-
-            // Ordenar o tempo cronologicamente (YYYY-MM-DD ou YYYY-Wxx ordena naturalmente)
-            const sortedTimeKeys = Object.keys(grouped).sort();
-            const labels = sortedTimeKeys.map(k => timeLabelsMap[k]);
-
-            // Encontrar todas as entidades únicas para criar os datasets (linhas/barras)
-            const entitiesSet = new Set();
-            sortedTimeKeys.forEach(tk => Object.keys(grouped[tk]).forEach(e => entitiesSet.add(e)));
-            const entityList = Array.from(entitiesSet).sort();
-
-            // Preparar Datasets
-            const heightDatasets = [];
-            const stemDatasets = [];
-            const leafDatasets = [];
-
-            entityList.forEach((ent, idx) => {
-                const color = palette[idx % palette.length];
-                
-                // Extrair médias de altura e hastes
-                const dataH = sortedTimeKeys.map(tk => {
-                    const arr = grouped[tk][ent]?.h;
-                    return arr && arr.length ? (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(1) : null;
-                });
-                const dataSC = sortedTimeKeys.map(tk => {
-                    const arr = grouped[tk][ent]?.sc;
-                    return arr && arr.length ? (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(1) : null;
-                });
-
-                // Preencher Datasets de Linha
-                heightDatasets.push({
-                    label: ent === 'Geral' ? 'Altura Média (cm)' : ent,
-                    data: dataH,
-                    borderColor: color.border, 
-                    backgroundColor: compareMode === 'SIMPLES' ? color.bg : 'transparent',
-                    borderWidth: 3, pointBackgroundColor: '#fff', pointBorderColor: color.border,
-                    pointBorderWidth: 3, pointRadius: 5, pointHoverRadius: 7, 
-                    fill: compareMode === 'SIMPLES', tension: 0.4
-                });
-
-                stemDatasets.push({
-                    label: ent === 'Geral' ? 'Compr. Haste (cm)' : ent,
-                    data: dataSC,
-                    borderColor: compareMode === 'SIMPLES' ? '#f59e0b' : color.border, 
-                    backgroundColor: compareMode === 'SIMPLES' ? 'rgba(245, 158, 11, 0.15)' : 'transparent',
-                    borderWidth: 3, pointBackgroundColor: '#fff', 
-                    pointBorderColor: compareMode === 'SIMPLES' ? '#f59e0b' : color.border,
-                    pointBorderWidth: 3, pointRadius: 5, pointHoverRadius: 7, 
-                    fill: compareMode === 'SIMPLES', tension: 0.4
-                });
-
-                // Extrair médias de Folhas
-                const dataLC = sortedTimeKeys.map(tk => {
-                    const arr = grouped[tk][ent]?.lc;
-                    return arr && arr.length ? (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(1) : null;
-                });
-
-                if (compareMode === 'SIMPLES') {
-                    // No modo simples, mostra Comprimento e Largura
-                    const dataLL = sortedTimeKeys.map(tk => {
-                        const arr = grouped[tk][ent]?.ll;
-                        return arr && arr.length ? (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(1) : null;
-                    });
-                    leafDatasets.push({
-                        label: 'Comprimento (cm)', data: dataLC, backgroundColor: '#10b981', borderColor: '#10b981', borderWidth: 2, borderRadius: 6
-                    });
-                    leafDatasets.push({
-                        label: 'Largura (cm)', data: dataLL, backgroundColor: '#6ee7b7', borderColor: '#6ee7b7', borderWidth: 2, borderRadius: 6
-                    });
-                } else {
-                    // No modo de comparação, mostra apenas o Comprimento para não poluir o gráfico de barras
-                    leafDatasets.push({
-                        label: ent, data: dataLC, backgroundColor: color.border, borderColor: color.border, borderWidth: 2, borderRadius: 6
-                    });
+            const ic=document.getElementById('dashInsightCard'), it=document.getElementById('dashInsightText');
+            if(stk.length>0){
+                let txt=""; if(cm==='SIMPLES'&&stk.length>=2){
+                    const vd=filtered.map(r=>{const p=r.date.split('/'); return new Date(p[2],p[1]-1,p[0]);}).filter(d=>!isNaN(d));
+                    const mnD=new Date(Math.min(...vd)), mxD=new Date(Math.max(...vd));
+                    let dd=Math.round((mxD-mnD)/(864e5))||1;
+                    const fD=g[stk[0]]['Geral'], lD=g[stk[stk.length-1]]['Geral'];
+                    const ga=(a)=>a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length):0;
+                    const lG=ga(lD.lc)-ga(fD.lc), hG=ga(lD.h)-ga(fD.h);
+                    txt=`Análise para <strong>${fe!=='TODAS'?'Estufa '+fe:'Geral'} (${fs!=='TODOS'?'Setor '+fs:'Geral'} - ${fc!=='TODOS'?'Ciclo '+fc:'Todos'})</strong>:<br>Num período de <strong>${dd} dias</strong>:<br>🍃 Folha cresceu <strong>${lG.toFixed(1)} cm</strong> (Ritmo: ${((lG/dd)*7).toFixed(1)} cm/sem).<br>📏 Altura cresceu <strong>${hG.toFixed(1)} cm</strong> (Ritmo: ${((hG/dd)*7).toFixed(1)} cm/sem).`;
+                } else if(cm==='FOLHA'){
+                    const lk=stk[stk.length-1], ld=g[lk], st=[]; Object.keys(ld).forEach(e=>{const a=ld[e].a; if(a&&a.length) st.push({n:e, ab:a.reduce((a,b)=>a+b,0)/a.length});});
+                    if(st.length>1){st.sort((a,b)=>b.ab-a.ab); txt=`Pior posição em <strong>${tlm[lk]}</strong>: <strong>${st[0].n}</strong> (${st[0].ab.toFixed(1)} abortos). <span class="text-red-600 font-bold block mt-1">⚠️ Alerta de perda nesta posição!</span>`;}
+                } else if(stk.length>0 && (cm==='ESTUFA'||cm==='SETOR'||cm==='VARIEDADE')){
+                    const lk=stk[stk.length-1], ld=g[lk], st=[]; Object.keys(ld).forEach(e=>{const h=ld[e].h; if(h&&h.length) st.push({n:e, h:h.reduce((a,b)=>a+b,0)/h.length});});
+                    if(st.length>1){st.sort((a,b)=>b.h-a.h); txt=`Em <strong>${tlm[lk]}</strong>, <strong>${st[0].n}</strong> lidera o crescimento (${st[0].h.toFixed(1)} cm). Diferença para o menor: <strong>${(st[0].h-st[st.length-1].h).toFixed(1)} cm</strong>.`;}
                 }
-            });
-
-            // --- INÍCIO DA LÓGICA DE INSIGHTS (ANÁLISE ARTIFICIAL AVANÇADA) ---
-            const insightCard = document.getElementById('dashInsightCard');
-            const insightText = document.getElementById('dashInsightText');
-
-            if (sortedTimeKeys.length > 0) {
-                let txt = "";
-
-                if (compareMode === 'SIMPLES' && sortedTimeKeys.length >= 2) {
-                    // LÓGICA 1: TAXA DE CRESCIMENTO NO TEMPO (Ex: Cresceu X cm por semana)
-                    
-                    // Encontrar a data mais antiga e a mais recente nos dados filtrados
-                    const validDates = filtered.map(r => {
-                        const p = r.date.split('/');
-                        return new Date(p[2], p[1]-1, p[0]);
-                    }).filter(d => !isNaN(d));
-
-                    const minDate = new Date(Math.min(...validDates));
-                    const maxDate = new Date(Math.max(...validDates));
-                    
-                    // Diferença em dias (Mínimo de 1 para evitar divisão por zero)
-                    let diffDays = Math.round((maxDate - minDate) / (1000 * 60 * 60 * 24));
-                    if (diffDays <= 0) diffDays = 1;
-
-                    // Pegar os valores do primeiro e último registro de tempo no gráfico
-                    const firstData = grouped[sortedTimeKeys[0]]['Geral'];
-                    const lastData = grouped[sortedTimeKeys[sortedTimeKeys.length - 1]]['Geral'];
-
-                    const getAvg = (arr) => (arr && arr.length > 0) ? (arr.reduce((a,b)=>a+b,0)/arr.length) : 0;
-
-                    const firstLeaf = getAvg(firstData.lc);
-                    const lastLeaf = getAvg(lastData.lc);
-                    const leafGrowth = lastLeaf - firstLeaf;
-                    
-                    const firstHeight = getAvg(firstData.h);
-                    const lastHeight = getAvg(lastData.h);
-                    const heightGrowth = lastHeight - firstHeight;
-
-                    const labelEstufa = filterEstufa !== 'TODAS' ? `Estufa ${filterEstufa}` : 'Todas as Estufas';
-                    const labelSetor = filterSetor !== 'TODOS' ? `Setor ${filterSetor}` : 'Todos os Setores';
-                    const labelCiclo = filterCiclo !== 'TODOS' ? `Ciclo ${filterCiclo}` : 'Todos os Ciclos';
-
-                    txt = `Análise do período para <strong>${labelEstufa} (${labelSetor} - ${labelCiclo})</strong>:<br>`;
-                    
-                    if (leafGrowth > 0 || heightGrowth > 0) {
-                        txt += `Num período selecionado de <strong>${diffDays} dias</strong> (de ${minDate.toLocaleDateString('pt-BR')} a ${maxDate.toLocaleDateString('pt-BR')}), identificamos que:<br><br>`;
-                        
-                        if (leafGrowth > 0) {
-                            const leafPerWeek = ((leafGrowth / diffDays) * 7).toFixed(1);
-                            txt += `🍃 A folha aumentou <strong>${leafGrowth.toFixed(1)} cm</strong> no total `;
-                            txt += `<span class="text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded ml-1">(Ritmo: ${leafPerWeek} cm / semana)</span>.<br>`;
-                        }
-                        
-                        if (heightGrowth > 0) {
-                            const heightPerWeek = ((heightGrowth / diffDays) * 7).toFixed(1);
-                            txt += `📏 A altura cresceu <strong>${heightGrowth.toFixed(1)} cm</strong> no total `;
-                            txt += `<span class="text-blue-700 font-bold bg-blue-100 px-2 py-0.5 rounded ml-1">(Ritmo: ${heightPerWeek} cm / semana)</span>.`;
-                        }
-                    } else {
-                        txt += `Neste período de ${diffDays} dias, a média de crescimento se manteve estável ou não há diferença positiva registada.`;
-                    }
-
-                } else if ((compareMode === 'ESTUFA' || compareMode === 'SETOR' || compareMode === 'VARIEDADE') && sortedTimeKeys.length > 0) {
-                    // LÓGICA 2: COMPARAÇÃO DE DESEMPENHO (Quem está ganhando/perdendo)
-                    const latestKey = sortedTimeKeys[sortedTimeKeys.length - 1];
-                    const latestData = grouped[latestKey];
-                    const labelTempo = timeLabelsMap[latestKey];
-
-                    let stats = [];
-                    Object.keys(latestData).forEach(ent => {
-                        const arrH = latestData[ent].h;
-                        if (arrH && arrH.length > 0) {
-                            stats.push({ name: ent, height: arrH.reduce((a,b)=>a+b,0)/arrH.length });
-                        }
-                    });
-
-                    if (stats.length > 1) {
-                        stats.sort((a,b) => b.height - a.height);
-                        const maior = stats[0];
-                        const menor = stats[stats.length - 1];
-                        const diff = (maior.height - menor.height).toFixed(1);
-
-                        txt = `Referente a <strong>${labelTempo}</strong>: A <strong>${maior.name}</strong> está liderando o crescimento com <strong>${maior.height.toFixed(1)} cm</strong> de média. `;
-                        txt += `Fique atento à <strong>${menor.name}</strong>, que apresentou o menor desenvolvimento (${menor.height.toFixed(1)} cm), ficando <strong>${diff} cm para trás</strong>. `;
-                        
-                        if (diff >= 10) {
-                            txt += `<br><span class="text-red-600 font-bold mt-1 inline-block">⚠️ Variação crítica! Verifique a distribuição de rega (gotejadores) ou a EC/pH na ${menor.name}.</span>`;
-                        } else if (diff >= 4) {
-                            txt += `<br><span class="text-amber-600 font-bold mt-1 inline-block">Atenção: Considere monitorar o vigor das plantas neste local nos próximos dias.</span>`;
-                        } else {
-                            txt += `<br><span class="text-emerald-700 font-bold mt-1 inline-block">Excelente! O desenvolvimento está bastante uniforme entre os locais comparados.</span>`;
-                        }
-                    }
-                } else if (compareMode === 'SIMPLES' && sortedTimeKeys.length === 1) {
-                    txt = `Temos dados de apenas <strong>1 agrupamento</strong> neste período selecionado. Amplie a Data ou adicione mais coletas para calcular a taxa de crescimento.`;
-                }
-
-                if (txt !== "") {
-                    insightText.innerHTML = txt;
-                    insightCard.classList.remove('hidden');
-                } else {
-                    insightCard.classList.add('hidden');
-                }
-
-            } else {
-                insightCard.classList.add('hidden'); // Ocultar se não houver dados suficientes
-            }
-            // --- FIM DA LÓGICA DE INSIGHTS ---
-
-            renderChartAltura(labels, heightDatasets);
-            renderChartFolhas(labels, leafDatasets);
-            renderChartHastes(labels, stemDatasets);
+                if(txt){it.innerHTML=txt; ic.classList.remove('hidden');} else ic.classList.add('hidden');
+            } else ic.classList.add('hidden');
+            renderChartAltura(lbls, hds); renderChartFolhas(lbls, lds); renderChartHastes(lbls, sds); renderChartFrutos(lbls, fds); renderChartMotivos(Object.keys(mm), Object.values(mm));
         }
 
-        function renderChartAltura(labels, datasets) {
-            const ctx = document.getElementById('chartAltura').getContext('2d');
-            if (chartAlturaInst) chartAlturaInst.destroy();
-
-            chartAlturaInst = new Chart(ctx, {
-                type: 'line',
-                data: { labels: labels, datasets: datasets },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: { padding: { top: 25, right: 20 } },
-                    plugins: { 
-                        legend: { display: datasets.length > 1, position: 'top', labels: { usePointStyle: true, pointStyle: 'line', font: { weight: 'bold' } } },
-                        datalabels: {
-                            display: true, align: 'top', anchor: 'end', offset: 4, color: '#1e293b', font: { weight: 'bold', size: 11 },
-                            formatter: function(value) { return value ? value : ''; }
-                        }
-                    },
-                    scales: {
-                        y: { beginAtZero: false, grid: { borderDash: [4, 4] }, suggestedMax: getSuggestedMax(datasets) * 1.1 },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
+        function renderChartAltura(l, d) {
+            const ctx = document.getElementById('chartAltura').getContext('2d'); if (chartAlturaInst) chartAlturaInst.destroy();
+            chartAlturaInst = new Chart(ctx, { type:'line', data:{labels:l, datasets:d}, options:{ responsive:true, maintainAspectRatio:false, layout:{padding:{top:25,right:20}}, plugins:{ legend:{display:d.length>1, position:'top', labels:{usePointStyle:true, pointStyle:'line', font:{weight:'bold'}}}, datalabels:{display:true, align:'top', anchor:'end', offset:4, color:'#1e293b', font:{weight:'bold', size:11}, formatter:v=>v?v:''} }, scales:{ y:{beginAtZero:false, grid:{borderDash:[4,4]}, suggestedMax:getSuggestedMax(d)*1.1}, x:{grid:{display:false}} } } });
+        }
+        function renderChartFolhas(l, d) {
+            const ctx = document.getElementById('chartFolhas').getContext('2d'); if (chartFolhasInst) chartFolhasInst.destroy();
+            chartFolhasInst = new Chart(ctx, { type:'bar', data:{labels:l, datasets:d}, options:{ responsive:true, maintainAspectRatio:false, layout:{padding:{top:25}}, plugins:{ legend:{display:true, position:'top', labels:{usePointStyle:true, pointStyle:'line', font:{weight:'bold'}}}, datalabels:{display:true, align:'end', anchor:'end', color:'#334155', font:{weight:'bold', size:10}, formatter:v=>v?v:''} }, scales:{ y:{beginAtZero:true, grid:{borderDash:[4,4]}, suggestedMax:getSuggestedMax(d)*1.2}, x:{grid:{display:false}} } } });
+        }
+        function renderChartHastes(l, d) {
+            const ctx = document.getElementById('chartHastes').getContext('2d'); if (chartHastesInst) chartHastesInst.destroy();
+            chartHastesInst = new Chart(ctx, { type:'line', data:{labels:l, datasets:d}, options:{ responsive:true, maintainAspectRatio:false, layout:{padding:{top:25,right:20}}, plugins:{ legend:{display:d.length>1, position:'top', labels:{usePointStyle:true, pointStyle:'line', font:{weight:'bold'}}}, datalabels:{display:true, align:'top', anchor:'end', offset:4, color:'#1e293b', font:{weight:'bold', size:11}, formatter:v=>v?v:''} }, scales:{ y:{beginAtZero:true, grid:{borderDash:[4,4]}, suggestedMax:getSuggestedMax(d)*1.2}, x:{grid:{display:false}} } } });
+        }
+        function renderChartFrutos(l, d) {
+            const ctx = document.getElementById('chartFrutos').getContext('2d'); if (chartFrutosInst) chartFrutosInst.destroy();
+            chartFrutosInst = new Chart(ctx, { type:'bar', data:{labels:l, datasets:d}, options:{ responsive:true, maintainAspectRatio:false, layout:{padding:{top:25}}, plugins:{ legend:{display:true, position:'top', labels:{usePointStyle:true, pointStyle:'line', font:{weight:'bold'}}}, datalabels:{display:true, align:'end', anchor:'end', color:'#334155', font:{weight:'bold', size:10}, formatter:v=>v?v:''} }, scales:{ y:{beginAtZero:true, grid:{borderDash:[4,4]}, suggestedMax:getSuggestedMax(d)*1.2}, x:{grid:{display:false}} } } });
+        }
+        function renderChartMotivos(l, d) {
+            const ctx = document.getElementById('chartMotivos').getContext('2d'); if (chartMotivosInst) chartMotivosInst.destroy();
+            chartMotivosInst = new Chart(ctx, { type:'doughnut', data:{labels:l, datasets:[{data:d, backgroundColor:['#ef4444','#f97316','#f59e0b','#8b5cf6','#ec4899','#64748b'], borderWidth:2, borderColor:'#ffffff'}]}, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'right', labels:{usePointStyle:true, boxWidth:8, font:{weight:'bold', size:10}}}, datalabels:{color:'#fff', font:{weight:'black', size:11}, formatter:(v,ctx)=>{let s=0; ctx.chart.data.datasets[0].data.map(d=>s+=d); return (v*100/s).toFixed(0)+"%";}} } } });
         }
 
-        function renderChartFolhas(labels, datasets) {
-            const ctx = document.getElementById('chartFolhas').getContext('2d');
-            if (chartFolhasInst) chartFolhasInst.destroy();
-
-            chartFolhasInst = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: labels, datasets: datasets },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: { padding: { top: 25 } },
-                    plugins: {
-                        legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'line', font: { weight: 'bold' } } },
-                        datalabels: {
-                            display: true, align: 'end', anchor: 'end', color: '#334155', font: { weight: 'bold', size: 10 },
-                            formatter: function(value) { return value ? value : ''; }
-                        }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, grid: { borderDash: [4, 4] }, suggestedMax: getSuggestedMax(datasets) * 1.2 },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
-        }
-
-        function renderChartHastes(labels, datasets) {
-            const ctx = document.getElementById('chartHastes').getContext('2d');
-            if (chartHastesInst) chartHastesInst.destroy();
-
-            chartHastesInst = new Chart(ctx, {
-                type: 'line',
-                data: { labels: labels, datasets: datasets },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: { padding: { top: 25, right: 20 } },
-                    plugins: { 
-                        legend: { display: datasets.length > 1, position: 'top', labels: { usePointStyle: true, pointStyle: 'line', font: { weight: 'bold' } } },
-                        datalabels: {
-                            display: true, align: 'top', anchor: 'end', offset: 4, color: '#1e293b', font: { weight: 'bold', size: 11 },
-                            formatter: function(value) { return value ? value : ''; }
-                        }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, grid: { borderDash: [4, 4] }, suggestedMax: getSuggestedMax(datasets) * 1.2 },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
-        }
-
-        function getSuggestedMax(datasets) {
-            let max = 0;
-            datasets.forEach(ds => {
-                ds.data.forEach(v => { if (v && Number(v) > max) max = Number(v); });
-            });
-            return max || 10; // previne NaN se não houver dados
-        }
+        function getSuggestedMax(ds) { let max=0; ds.forEach(d=>d.data.forEach(v=>{if(v&&Number(v)>max)max=Number(v);})); return max||10; }
 
         function generateMockData() {
-            // Gera dados muito mais completos com variações entre estufas espalhados por VÁRIOS MESES!
-            const mock = [];
-            const bases = [50, 75, 100, 130, 160, 190, 210, 220]; // crescimento 
-            
+            const mock = []; const bases = [50, 75, 100, 130, 160, 190, 210, 220];
             for(let i=0; i<8; i++) {
-                // Afastar as datas para gerar VÁRIOS MESES diferentes (pulando a cada 12 dias)
-                let d = new Date();
-                d.setDate(d.getDate() - (90 - (i*12))); // Espalha os dados pelos últimos 3 meses
+                let d = new Date(); d.setDate(d.getDate() - (90 - (i*12)));
                 let dateStr = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
-                
-                // Estufa 1, Setor 1 - Aikido
-                mock.push({
-                    date: dateStr, greenhouse: '1', sector: '1', cycle: '1', variety: 'Aikido',
-                    height: bases[i] + (Math.random()*5),
-                    leafComp: 15 + (i*1.5), leafLarg: 12 + (i*1.2), stemComp: 8 + (i*0.8)
-                });
-                // Estufa 1, Setor 2 - Tikara
-                mock.push({
-                    date: dateStr, greenhouse: '1', sector: '2', cycle: '1', variety: 'Tikara',
-                    height: bases[i] + 5 + (Math.random()*5),
-                    leafComp: 16 + (i*1.5), leafLarg: 13 + (i*1.2), stemComp: 8.5 + (i*0.8)
-                });
-                // Estufa 2, Setor 1 - Tsuyataro
-                mock.push({
-                    date: dateStr, greenhouse: '2', sector: '1', cycle: '1', variety: 'Tsuyataro',
-                    height: bases[i] - 15 + (Math.random()*5),
-                    leafComp: 13 + (i*1.2), leafLarg: 10 + (i*1.0), stemComp: 6.5 + (i*0.5)
-                });
+                mock.push({ date: dateStr, greenhouse: '1', sector: '1', cycle: '1', variety: 'Aikido', height: bases[i]+(Math.random()*5), leafComp: 15+(i*1.5), leafLarg: 12+(i*1.2), stemComp: 8+(i*0.8), frutoFolha: '1', frutos: 5, abortos: 0, motivoAborto: '' });
+                mock.push({ date: dateStr, greenhouse: '1', sector: '1', cycle: '1', variety: 'Aikido', height: bases[i]+(Math.random()*5), leafComp: 16+(i*1.5), leafLarg: 13+(i*1.2), stemComp: 8.5+(i*0.8), frutoFolha: '2', frutos: 6, abortos: 3, motivoAborto: 'Fungos' });
+                mock.push({ date: dateStr, greenhouse: '2', sector: '3', cycle: '1', variety: 'Tsuyataro', height: bases[i]-15+(Math.random()*5), leafComp: 13+(i*1.2), leafLarg: 10+(i*1.0), stemComp: 6.5+(i*0.5), frutoFolha: '1', frutos: 4, abortos: 2, motivoAborto: 'Tortos' });
             }
             return mock;
         }
 
-        function hideClearAllModal() {
-            document.getElementById('clearAllModal').classList.add('hidden');
-        }
-
-        function executeClearAll() {
-            hideClearAllModal();
-            clearAllFields(false);
-        }
-
-        function clearAllFields(promptConfirm) {
-            if (promptConfirm) {
-                document.getElementById('clearAllModal').classList.remove('hidden');
-                return;
-            }
-
-            records = []; // Limpa o carrinho
-            updateItemsCount();
-            clearFormSilently();
-            renderRecordsList(); // Atualiza a aba inferior visualmente
-            updatePreview();
-        }
+        function hideClearAllModal() { document.getElementById('clearAllModal').classList.add('hidden'); }
+        function executeClearAll() { hideClearAllModal(); records = []; updateItemsCount(); clearFormSilently(); renderRecordsList(); updatePreview(); }
+        function clearAllFields(prompt) { if (prompt) document.getElementById('clearAllModal').classList.remove('hidden'); else executeClearAll(); }
     </script>
 </body>
 </html>
