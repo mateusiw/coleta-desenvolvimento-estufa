@@ -369,23 +369,41 @@
             </div>
 
             <!-- Bloco 2: Filtros de Localização -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200 mb-8">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200 mb-8">
                 <div>
-                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Filtrar por Estufa</label>
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Estufa</label>
                     <select id="dashEstufa" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
-                        <option value="TODAS">Carregando...</option>
+                        <option value="TODAS">Todas</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Filtrar por Setor</label>
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Setor</label>
                     <select id="dashSetor" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
-                        <option value="TODOS">Carregando...</option>
+                        <option value="TODOS">Todos</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Filtrar por Ciclo</label>
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Ciclo</label>
                     <select id="dashCiclo" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
-                        <option value="TODOS">Carregando...</option>
+                        <option value="TODOS">Todos</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Linha</label>
+                    <select id="dashLinha" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
+                        <option value="TODAS">Todas</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Vaso</label>
+                    <select id="dashVaso" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
+                        <option value="TODOS">Todos</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">Nº Folha</label>
+                    <select id="dashFolha" onchange="filterDashboard()" class="w-full p-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-brand-500 outline-none font-bold text-slate-700 cursor-pointer">
+                        <option value="TODAS">Todas</option>
                     </select>
                 </div>
             </div>
@@ -394,12 +412,12 @@
             <div id="dashKPIs" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 opacity-5"><i data-lucide="ruler" class="w-24 h-24 text-blue-500"></i></div>
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 relative z-10">Altura Média</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 relative z-10">Altura Máxima</span>
                     <span id="kpiAltura" class="text-3xl font-black text-blue-600 relative z-10">-- cm</span>
                 </div>
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 opacity-5"><i data-lucide="scan-line" class="w-24 h-24 text-emerald-500"></i></div>
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 relative z-10">Tamanho Médio Folha</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 relative z-10">Tamanho Máx. Folha</span>
                     <span id="kpiFolha" class="text-3xl font-black text-emerald-600 relative z-10">-- cm</span>
                 </div>
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
@@ -433,7 +451,7 @@
             <div id="dashCharts" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
                     <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
-                        <i data-lucide="ruler" class="w-4 h-4 text-blue-500"></i> Evolução da Altura Média (cm)
+                        <i data-lucide="ruler" class="w-4 h-4 text-blue-500"></i> Evolução da Altura (Crescimento Real)
                     </h3>
                     <div class="relative h-64 w-full">
                         <canvas id="chartAltura"></canvas>
@@ -441,7 +459,7 @@
                 </div>
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
                     <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center gap-2">
-                        <i data-lucide="scan-line" class="w-4 h-4 text-emerald-500"></i> Tamanho Médio das Folhas (cm)
+                        <i data-lucide="scan-line" class="w-4 h-4 text-emerald-500"></i> Tamanho Máx. das Folhas (cm)
                     </h3>
                     <div class="relative h-64 w-full">
                         <canvas id="chartFolhas"></canvas>
@@ -492,7 +510,7 @@
             </div>
             <h3 class="text-xl font-black text-slate-800 text-center">Limpar Todos os Dados?</h3>
             <p class="text-sm text-slate-500 mt-3 text-center leading-relaxed font-medium">
-                Tem certeza que deseja apagar todas as plantas que já registou neste relatório?<br><br>
+                Tem certeza que deseja apagar todas as plantas que já registadas neste relatório?<br><br>
                 <span class="text-red-600 font-bold">Esta ação não pode ser desfeita.</span>
             </p>
             <div class="grid grid-cols-2 gap-3 mt-6">
@@ -944,48 +962,126 @@
             const url = "https://script.google.com/macros/s/AKfycbw9OdMAikCYB5vvURBAG2Ok_EZyX3k66HSkNQOgowbt1Bpz4KkPn1AyDIRvF3h9mdsq/exec";
             try { const res = await fetch(url + "?action=getDados"); if(res.ok) dashboardRawData = await res.json(); else throw new Error(); } 
             catch(e) { console.warn("Mock Data"); dashboardRawData = generateMockData(); }
-            populateDynamicFilters(dashboardRawData);
+            
+            // Normalizar os dados para remover formatacoes como ",00" ou ".00" que vêm da folha de cálculo
+            const norm = (v) => v ? String(v).trim().replace(/[,.]00$/, '') : '';
+            dashboardRawData = dashboardRawData.map(r => ({
+                ...r,
+                greenhouse: norm(r.greenhouse),
+                sector: norm(r.sector),
+                cycle: norm(r.cycle),
+                line: norm(r.line),
+                pot: norm(r.pot),
+                leafNum: norm(r.leafNum),
+                frutoFolha: norm(r.frutoFolha)
+            }));
+
+            // Chama o filtro principal que agora também cuida de preencher as opções em cascata
             filterDashboard();
+            
             document.getElementById('syncOverlay').classList.add('hidden'); document.getElementById('dashKPIs').classList.remove('hidden'); document.getElementById('dashCharts').classList.remove('hidden');
         }
 
-        function populateDynamicFilters(data) {
-            const de = document.getElementById('dashEstufa'), ds = document.getElementById('dashSetor'), dc = document.getElementById('dashCiclo');
-            const ve = de.value, vs = ds.value, vc = dc.value;
+        // Nova função inteligente de filtros em cascata
+        function populateDynamicFilters() {
+            const data = dashboardRawData;
+            if(!data || data.length === 0) return;
 
-            const ue = [...new Set(data.map(i => String(i.greenhouse||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-            const us = [...new Set(data.map(i => String(i.sector||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-            const uc = [...new Set(data.map(i => String(i.cycle||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+            const dsv = document.getElementById('dashDataInicio').value, dev = document.getElementById('dashDataFim').value;
+            let ds = dsv?new Date(dsv+'T00:00:00'):null, de = dev?new Date(dev+'T23:59:59'):null;
 
-            de.innerHTML = '<option value="TODAS">Todas as Estufas</option>' + ue.map(x=>`<option value="${x}">Estufa ${x}</option>`).join('');
-            ds.innerHTML = '<option value="TODOS">Todos os Setores</option>' + us.map(x=>`<option value="${x}">Setor ${x}</option>`).join('');
-            dc.innerHTML = '<option value="TODOS">Todos os Ciclos</option>' + uc.map(x=>`<option value="${x}">Ciclo ${x}</option>`).join('');
+            const dE = document.getElementById('dashEstufa'), dS = document.getElementById('dashSetor'), dC = document.getElementById('dashCiclo');
+            const dL = document.getElementById('dashLinha'), dV = document.getElementById('dashVaso'), dF = document.getElementById('dashFolha');
+            
+            const vE = dE.value, vS = dS.value, vC = dC.value, vL = dL.value, vV = dV.value, vF = dF.value;
 
-            de.value = ue.includes(ve)?ve:'TODAS'; ds.value = us.includes(vs)?vs:'TODOS'; dc.value = uc.includes(vc)?vc:'TODOS';
+            // 1. Filtrar pelo tempo base
+            const data0 = data.filter(r => {
+                if(!r.date) return false;
+                if(ds||de){
+                    const dp=r.date.split('/');const rd=new Date(dp[2],dp[1]-1,dp[0]); 
+                    if(ds&&rd<ds)return false; 
+                    if(de&&rd>de)return false;
+                }
+                return true;
+            });
+
+            // 2. Montar opções em CASCATA rigorosa (Um restringe o próximo)
+            const uE = [...new Set(data0.map(i => String(i.greenhouse||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+            
+            const dataS = vE !== 'TODAS' ? data0.filter(i => String(i.greenhouse||'').trim() === vE) : data0;
+            const uS = [...new Set(dataS.map(i => String(i.sector||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+
+            const dataC = vS !== 'TODOS' ? dataS.filter(i => String(i.sector||'').trim() === vS) : dataS;
+            const uC = [...new Set(dataC.map(i => String(i.cycle||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+
+            const dataL = vC !== 'TODOS' ? dataC.filter(i => String(i.cycle||'').trim() === vC) : dataC;
+            const uL = [...new Set(dataL.map(i => String(i.line||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+
+            const dataV = vL !== 'TODAS' ? dataL.filter(i => String(i.line||'').trim() === vL) : dataL;
+            const uV = [...new Set(dataV.map(i => String(i.pot||'').trim()))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+
+            const dataF_filtered = vV !== 'TODOS' ? dataV.filter(i => String(i.pot||'').trim() === vV) : dataV;
+            const uF = [...new Set(dataF_filtered.flatMap(i => [String(i.leafNum||'').trim(), String(i.frutoFolha||'').trim()]))].filter(x=>x).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+
+            // 3. Atualizar HTML dos select dropdowns
+            dE.innerHTML = '<option value="TODAS">Todas</option>' + uE.map(x=>`<option value="${x}">Estufa ${x}</option>`).join('');
+            dS.innerHTML = '<option value="TODOS">Todos</option>' + uS.map(x=>`<option value="${x}">Setor ${x}</option>`).join('');
+            dC.innerHTML = '<option value="TODOS">Todos</option>' + uC.map(x=>`<option value="${x}">Ciclo ${x}</option>`).join('');
+            dL.innerHTML = '<option value="TODAS">Todas</option>' + uL.map(x=>`<option value="${x}">Linha ${x}</option>`).join('');
+            dV.innerHTML = '<option value="TODOS">Todos</option>' + uV.map(x=>`<option value="${x}">Vaso ${x}</option>`).join('');
+            dF.innerHTML = '<option value="TODAS">Todas</option>' + uF.map(x=>`<option value="${x}">Folha ${x}</option>`).join('');
+
+            // 4. Manter o valor se ele ainda existir nas opções, senão reseta para "TODAS/TODOS"
+            dE.value = uE.includes(vE)?vE:'TODAS'; 
+            dS.value = uS.includes(vS)?vS:'TODOS'; 
+            dC.value = uC.includes(vC)?vC:'TODOS';
+            dL.value = uL.includes(vL)?vL:'TODAS'; 
+            dV.value = uV.includes(vV)?vV:'TODOS'; 
+            dF.value = uF.includes(vF)?vF:'TODAS';
         }
         
         function resetDashboardFilters() {
-            document.getElementById('dashDataInicio').value = ''; document.getElementById('dashDataFim').value = ''; document.getElementById('dashEstufa').value = 'TODAS'; document.getElementById('dashSetor').value = 'TODOS'; document.getElementById('dashCiclo').value = 'TODOS'; document.getElementById('dashTempo').value = 'DIA'; document.getElementById('dashCompare').value = 'SIMPLES';
+            document.getElementById('dashDataInicio').value = ''; document.getElementById('dashDataFim').value = ''; 
+            document.getElementById('dashEstufa').value = 'TODAS'; document.getElementById('dashSetor').value = 'TODOS'; document.getElementById('dashCiclo').value = 'TODOS'; 
+            document.getElementById('dashLinha').value = 'TODAS'; document.getElementById('dashVaso').value = 'TODOS'; document.getElementById('dashFolha').value = 'TODAS'; 
+            document.getElementById('dashTempo').value = 'DIA'; document.getElementById('dashCompare').value = 'SIMPLES';
             filterDashboard();
         }
 
-        function filterDashboard() { if (dashboardRawData.length) processAndRenderCharts(dashboardRawData); }
+        function filterDashboard() { 
+            if (!dashboardRawData || dashboardRawData.length === 0) return;
+            // Atualiza os botões dinamicamente antes de processar os gráficos
+            populateDynamicFilters();
+            // Renderiza os gráficos com as opções ativas
+            processAndRenderCharts(dashboardRawData); 
+        }
 
         function processAndRenderCharts(data) {
-            const dsv = document.getElementById('dashDataInicio').value, dev = document.getElementById('dashDataFim').value, fe = document.getElementById('dashEstufa').value, fs = document.getElementById('dashSetor').value, fc = document.getElementById('dashCiclo').value, tm = document.getElementById('dashTempo').value, cm = document.getElementById('dashCompare').value;
+            const dsv = document.getElementById('dashDataInicio').value, dev = document.getElementById('dashDataFim').value, fe = document.getElementById('dashEstufa').value, fs = document.getElementById('dashSetor').value, fc = document.getElementById('dashCiclo').value, fl = document.getElementById('dashLinha').value, fv = document.getElementById('dashVaso').value, ff = document.getElementById('dashFolha').value, tm = document.getElementById('dashTempo').value, cm = document.getElementById('dashCompare').value;
             let ds = dsv?new Date(dsv+'T00:00:00'):null, de = dev?new Date(dev+'T23:59:59'):null;
             const pal = [{border:'#3b82f6',bg:'rgba(59,130,246,0.15)'},{border:'#f59e0b',bg:'rgba(245,158,11,0.15)'},{border:'#10b981',bg:'rgba(16,185,129,0.15)'},{border:'#8b5cf6',bg:'rgba(139,92,246,0.15)'},{border:'#f43f5e',bg:'rgba(244,63,94,0.15)'}];
+            
             let filtered = data.filter(r => {
                 if(!r.date) return false;
                 if(ds||de){const dp=r.date.split('/');const rd=new Date(dp[2],dp[1]-1,dp[0]); if(ds&&rd<ds)return false; if(de&&rd>de)return false;}
+                
+                // Filtros de Linha, Vaso e Folha (Aplicam-se sempre)
+                if(fl!=='TODAS'&&String(r.line)!==fl) return false;
+                if(fv!=='TODOS'&&String(r.pot)!==fv) return false;
+                if(ff!=='TODAS'&&String(r.leafNum)!==ff&&String(r.frutoFolha)!==ff) return false;
+
                 if(cm==='SIMPLES'){if(fe!=='TODAS'&&String(r.greenhouse)!==fe)return false; if(fs!=='TODOS'&&String(r.sector)!==fs)return false; if(fc!=='TODOS'&&String(r.cycle)!==fc)return false;}
                 else if(cm==='ESTUFA'){if(fs!=='TODOS'&&String(r.sector)!==fs)return false; if(fc!=='TODOS'&&String(r.cycle)!==fc)return false;}
                 else if(cm==='SETOR'){if(fe!=='TODAS'&&String(r.greenhouse)!==fe)return false; if(fc!=='TODOS'&&String(r.cycle)!==fc)return false;}
                 else if(cm==='VARIEDADE'||cm==='FOLHA'){if(fe!=='TODAS'&&String(r.greenhouse)!==fe)return false; if(fs!=='TODOS'&&String(r.sector)!==fs)return false; if(fc!=='TODOS'&&String(r.cycle)!==fc)return false;}
                 return true;
             });
+
             let th=0, ch=0, tl=0, cl=0, ts=0, cs=0, tf=0, ta=0, mm={};
+            let maxHGlobal=0, maxLGlobal=0;
             const g={}, tlm={}, mn=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+            
             filtered.forEach(r => {
                 const dp=r.date.split('/'); const dobj=new Date(dp[2],dp[1]-1,dp[0]);
                 let tk, dl;
@@ -993,33 +1089,45 @@
                 else if(tm==='MES'){tk=`${dp[2]}-${dp[1]}`; dl=`${mn[parseInt(dp[1])-1]} ${dp[2]}`;}
                 else if(tm==='ANO'){tk=dp[2]; dl=dp[2];}
                 else{tk=`${dp[2]}-${dp[1]}-${dp[0]}`; dl=`${dp[0]}/${dp[1]}`;}
+                
                 let ek='Geral'; if(cm==='ESTUFA') ek=`Estufa ${r.greenhouse||'?'}`; if(cm==='SETOR') ek=`Setor ${r.sector||'?'}`; if(cm==='VARIEDADE') ek=r.variety||'Outra'; if(cm==='FOLHA') ek=`Folha ${r.frutoFolha||'?'}`;
+                
                 if(!g[tk]){g[tk]={}; tlm[tk]=dl;} if(!g[tk][ek])g[tk][ek]={h:[],lc:[],ll:[],sc:[],f:[],a:[]};
-                if(r.height&&!isNaN(parseFloat(r.height))){const v=parseFloat(r.height); g[tk][ek].h.push(v); th+=v; ch++;}
-                if(r.leafComp&&!isNaN(parseFloat(r.leafComp))){const v=parseFloat(r.leafComp); g[tk][ek].lc.push(v); tl+=v; cl++;}
-                if(r.leafLarg&&!isNaN(parseFloat(r.leafLarg))) g[tk][ek].ll.push(parseFloat(r.leafLarg));
+
+                // Lógica Inteligente para o filtro de Nº Folha: Isolar apenas as métricas da folha pedida
+                let r_leafComp = r.leafComp, r_leafLarg = r.leafLarg, r_frutos = r.frutos, r_abortos = r.abortos, r_motivo = r.motivoAborto;
+                if (ff !== 'TODAS') {
+                    if (String(r.leafNum) !== ff) { r_leafComp = null; r_leafLarg = null; }
+                    if (String(r.frutoFolha) !== ff) { r_frutos = null; r_abortos = null; r_motivo = ''; }
+                }
+
+                if(r.height&&!isNaN(parseFloat(r.height))){const v=parseFloat(r.height); g[tk][ek].h.push(v); if(v>maxHGlobal)maxHGlobal=v; ch++;}
+                if(r_leafComp&&!isNaN(parseFloat(r_leafComp))){const v=parseFloat(r_leafComp); g[tk][ek].lc.push(v); if(v>maxLGlobal)maxLGlobal=v; cl++;}
+                if(r_leafLarg&&!isNaN(parseFloat(r_leafLarg))) g[tk][ek].ll.push(parseFloat(r_leafLarg));
                 if(r.stemComp&&!isNaN(parseFloat(r.stemComp))){const v=parseFloat(r.stemComp); g[tk][ek].sc.push(v); ts+=v; cs++;}
-                if(r.frutos&&!isNaN(parseFloat(r.frutos))){const v=parseFloat(r.frutos); g[tk][ek].f.push(v); tf+=v;}
-                if(r.abortos&&!isNaN(parseFloat(r.abortos))){const v=parseFloat(r.abortos); g[tk][ek].a.push(v); if(v>0){ta+=v; const rm=r.motivoAborto?r.motivoAborto.trim():''; const m=rm?(rm.charAt(0).toUpperCase()+rm.slice(1).toLowerCase()):'Não informado'; mm[m]=(mm[m]||0)+v;}}
+                if(r_frutos&&!isNaN(parseFloat(r_frutos))){const v=parseFloat(r_frutos); g[tk][ek].f.push(v); tf+=v;}
+                if(r_abortos&&!isNaN(parseFloat(r_abortos))){const v=parseFloat(r_abortos); g[tk][ek].a.push(v); if(v>0){ta+=v; const rm=r_motivo?r_motivo.trim():''; const m=rm?(rm.charAt(0).toUpperCase()+rm.slice(1).toLowerCase()):'Não informado'; mm[m]=(mm[m]||0)+v;}}
             });
-            document.getElementById('kpiAltura').innerText=ch>0?(th/ch).toFixed(1)+' cm':'-- cm'; document.getElementById('kpiFolha').innerText=cl>0?(tl/cl).toFixed(1)+' cm':'-- cm'; document.getElementById('kpiHaste').innerText=cs>0?(ts/cs).toFixed(1)+' cm':'-- cm';
+
+            document.getElementById('kpiAltura').innerText=ch>0?(maxHGlobal).toFixed(1)+' cm':'-- cm'; document.getElementById('kpiFolha').innerText=cl>0?(maxLGlobal).toFixed(1)+' cm':'-- cm'; document.getElementById('kpiHaste').innerText=cs>0?(ts/cs).toFixed(1)+' cm':'-- cm';
             const tgf=tf+ta; if(tgf>0){document.getElementById('kpiAproveitado').innerText=Math.round((tf/tgf)*100)+'%'; document.getElementById('kpiAbortado').innerText=Math.round((ta/tgf)*100)+'%';} else {document.getElementById('kpiAproveitado').innerText='--%'; document.getElementById('kpiAbortado').innerText='--%';}
+            
             const stk=Object.keys(g).sort(); const lbls=stk.map(k=>tlm[k]); const es=new Set(); stk.forEach(tk=>Object.keys(g[tk]).forEach(e=>es.add(e))); const el=Array.from(es).sort();
             const hds=[], sds=[], lds=[], fds=[];
+            
             el.forEach((ent, idx) => {
                 const c=pal[idx%pal.length];
-                const dh=stk.map(tk=>{const a=g[tk][ent]?.h; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                const dh=stk.map(tk=>{const a=g[tk][ent]?.h; return a&&a.length?(Math.max(...a)).toFixed(1):null;});
                 const dsc=stk.map(tk=>{const a=g[tk][ent]?.sc; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
-                const dlc=stk.map(tk=>{const a=g[tk][ent]?.lc; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
-                
-                // MUDANÇA: SOMA de frutos e abortos em vez de média
+                const dlc=stk.map(tk=>{const a=g[tk][ent]?.lc; return a&&a.length?(Math.max(...a)).toFixed(1):null;});
                 const df=stk.map(tk=>{const a=g[tk][ent]?.f; return a&&a.length?(a.reduce((a,b)=>a+b,0)).toFixed(0):null;});
                 const da=stk.map(tk=>{const a=g[tk][ent]?.a; return a&&a.length?(a.reduce((a,b)=>a+b,0)).toFixed(0):null;});
 
                 hds.push({label:ent==='Geral'?'Altura (cm)':ent, data:dh, borderColor:c.border, backgroundColor:cm==='SIMPLES'?c.bg:'transparent', borderWidth:3, fill:cm==='SIMPLES', tension:0.4});
                 sds.push({label:ent==='Geral'?'Haste (cm)':ent, data:dsc, borderColor:cm==='SIMPLES'?'#f59e0b':c.border, backgroundColor:cm==='SIMPLES'?'rgba(245,158,11,0.15)':'transparent', borderWidth:3, fill:cm==='SIMPLES', tension:0.4});
+                
                 if(cm==='SIMPLES'){
-                    const dll=stk.map(tk=>{const a=g[tk][ent]?.ll; return a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length).toFixed(1):null;});
+                    const dll=stk.map(tk=>{const a=g[tk][ent]?.ll; return a&&a.length?(Math.max(...a)).toFixed(1):null;});
                     lds.push({label:'Comprimento (cm)', data:dlc, backgroundColor:'#10b981', borderColor:'#10b981', borderWidth:2, borderRadius:6});
                     lds.push({label:'Largura (cm)', data:dll, backgroundColor:'#6ee7b7', borderColor:'#6ee7b7', borderWidth:2, borderRadius:6});
                     fds.push({label:'Frutos', data:df, backgroundColor:'#f97316', borderColor:'#f97316', borderWidth:2, borderRadius:6});
@@ -1029,6 +1137,7 @@
                     fds.push({label:ent+' (Frutos)', data:df, backgroundColor:c.border, borderColor:c.border, borderWidth:2, borderRadius:6});
                 }
             });
+            
             const ic=document.getElementById('dashInsightCard'), it=document.getElementById('dashInsightText');
             if(stk.length>0){
                 let txt=""; if(cm==='SIMPLES'&&stk.length>=2){
@@ -1037,16 +1146,16 @@
                     let dd=Math.round((mxD-mnD)/(864e5))||1;
                     const fD=g[stk[0]]['Geral'], lD=g[stk[stk.length-1]]['Geral'];
                     const ga=(a)=>a&&a.length?(a.reduce((a,b)=>a+b,0)/a.length):0;
-                    const lG=ga(lD.lc)-ga(fD.lc), hG=ga(lD.h)-ga(fD.h);
-                    txt=`Análise para <strong>${fe!=='TODAS'?'Estufa '+fe:'Geral'} (${fs!=='TODOS'?'Setor '+fs:'Geral'} - ${fc!=='TODOS'?'Ciclo '+fc:'Todos'})</strong>:<br>Num período de <strong>${dd} dias</strong>:<br>🍃 Folha cresceu <strong>${lG.toFixed(1)} cm</strong> (Ritmo: ${((lG/dd)*7).toFixed(1)} cm/sem).<br>📏 Altura cresceu <strong>${hG.toFixed(1)} cm</strong> (Ritmo: ${((hG/dd)*7).toFixed(1)} cm/sem).`;
+                    const gMax=(a)=>a&&a.length?Math.max(...a):0;
+                    const lG=gMax(lD.lc)-gMax(fD.lc), hG=gMax(lD.h)-gMax(fD.h);
+                    txt=`Análise para <strong>${fe!=='TODAS'?'Estufa '+fe:'Geral'} (${fs!=='TODOS'?'Setor '+fs:'Geral'} - ${fc!=='TODOS'?'Ciclo '+fc:'Todos'})</strong>:<br>Num período de <strong>${dd} dias</strong>:<br>🍃 Folha máxima cresceu <strong>${lG.toFixed(1)} cm</strong> (Ritmo: ${((lG/dd)*7).toFixed(1)} cm/sem).<br>📏 Altura máxima cresceu <strong>${hG.toFixed(1)} cm</strong> (Ritmo: ${((hG/dd)*7).toFixed(1)} cm/sem).`;
                 } else if(cm==='FOLHA'){
                     const lk=stk[stk.length-1], ld=g[lk], st=[]; 
-                    // MUDANÇA: SOMA de abortos para a análise da folha
                     Object.keys(ld).forEach(e=>{const a=ld[e].a; if(a&&a.length) st.push({n:e, ab:a.reduce((a,b)=>a+b,0)});});
                     if(st.length>1){st.sort((a,b)=>b.ab-a.ab); txt=`Pior posição em <strong>${tlm[lk]}</strong>: <strong>${st[0].n}</strong> (total de ${st[0].ab.toFixed(0)} abortos). <span class="text-red-600 font-bold block mt-1">⚠️ Alerta de perda nesta posição!</span>`;}
                 } else if(stk.length>0 && (cm==='ESTUFA'||cm==='SETOR'||cm==='VARIEDADE')){
-                    const lk=stk[stk.length-1], ld=g[lk], st=[]; Object.keys(ld).forEach(e=>{const h=ld[e].h; if(h&&h.length) st.push({n:e, h:h.reduce((a,b)=>a+b,0)/h.length});});
-                    if(st.length>1){st.sort((a,b)=>b.h-a.h); txt=`Em <strong>${tlm[lk]}</strong>, <strong>${st[0].n}</strong> lidera o crescimento (${st[0].h.toFixed(1)} cm). Diferença para o menor: <strong>${(st[0].h-st[st.length-1].h).toFixed(1)} cm</strong>.`;}
+                    const lk=stk[stk.length-1], ld=g[lk], st=[]; Object.keys(ld).forEach(e=>{const h=ld[e].h; if(h&&h.length) st.push({n:e, h:Math.max(...h)});});
+                    if(st.length>1){st.sort((a,b)=>b.h-a.h); txt=`Em <strong>${tlm[lk]}</strong>, <strong>${st[0].n}</strong> lidera o crescimento com a ponta em (${st[0].h.toFixed(1)} cm). Diferença para o menor: <strong>${(st[0].h-st[st.length-1].h).toFixed(1)} cm</strong>.`;}
                 }
                 if(txt){it.innerHTML=txt; ic.classList.remove('hidden');} else ic.classList.add('hidden');
             } else ic.classList.add('hidden');
@@ -1081,9 +1190,9 @@
             for(let i=0; i<8; i++) {
                 let d = new Date(); d.setDate(d.getDate() - (90 - (i*12)));
                 let dateStr = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
-                mock.push({ date: dateStr, greenhouse: '1', sector: '1', cycle: '1', variety: 'Aikido', height: bases[i]+(Math.random()*5), leafComp: 15+(i*1.5), leafLarg: 12+(i*1.2), stemComp: 8+(i*0.8), frutoFolha: '1', frutos: 5, abortos: 0, motivoAborto: '' });
-                mock.push({ date: dateStr, greenhouse: '1', sector: '1', cycle: '1', variety: 'Aikido', height: bases[i]+(Math.random()*5), leafComp: 16+(i*1.5), leafLarg: 13+(i*1.2), stemComp: 8.5+(i*0.8), frutoFolha: '2', frutos: 6, abortos: 3, motivoAborto: 'Fungos' });
-                mock.push({ date: dateStr, greenhouse: '2', sector: '3', cycle: '1', variety: 'Tsuyataro', height: bases[i]-15+(Math.random()*5), leafComp: 13+(i*1.2), leafLarg: 10+(i*1.0), stemComp: 6.5+(i*0.5), frutoFolha: '1', frutos: 4, abortos: 2, motivoAborto: 'Tortos' });
+                mock.push({ date: dateStr, greenhouse: '1', sector: '1', cycle: '1', line: '10', pot: '1', variety: 'Aikido', height: bases[i]+(Math.random()*5), leafComp: 15+(i*1.5), leafLarg: 12+(i*1.2), stemComp: 8+(i*0.8), frutoFolha: '1', frutos: 5, abortos: 0, motivoAborto: '' });
+                mock.push({ date: dateStr, greenhouse: '1', sector: '1', cycle: '1', line: '10', pot: '1', variety: 'Aikido', height: bases[i]+(Math.random()*5), leafComp: 16+(i*1.5), leafLarg: 13+(i*1.2), stemComp: 8.5+(i*0.8), frutoFolha: '2', frutos: 6, abortos: 3, motivoAborto: 'Fungos' });
+                mock.push({ date: dateStr, greenhouse: '2', sector: '3', cycle: '1', line: '12', pot: '5', variety: 'Tsuyataro', height: bases[i]-15+(Math.random()*5), leafComp: 13+(i*1.2), leafLarg: 10+(i*1.0), stemComp: 6.5+(i*0.5), frutoFolha: '1', frutos: 4, abortos: 2, motivoAborto: 'Tortos' });
             }
             return mock;
         }
