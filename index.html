@@ -599,6 +599,13 @@
 
         Chart.register(ChartDataLabels);
 
+        function getWeekNumber(d) {
+            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        }
+
         // Funções para salvar e carregar do Cache (Local Storage)
         function saveRecords() {
             try {
@@ -722,7 +729,7 @@
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i data-lucide="save" class="w-5 h-5"></i> <span>Salvar Alterações</span>';
             btn.className = "w-full mt-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl text-sm transition-all shadow-lg flex justify-center items-center gap-2 uppercase tracking-widest active:scale-95";
-            document.getElementById('formTitle').innerHTML = '<i data-lucide="pencil" class="text-blue-600"></i> Editando Planta Registrada';
+            document.getElementById('formTitle').innerHTML = '<i data-lucide="pencil" class="text-blue-600"></i> Editando Planta Registada';
             document.getElementById('formContainer').classList.add('border-blue-300', 'ring-2', 'ring-blue-100');
             document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
             renderRecordsList(); updatePreview(); lucide.createIcons();
